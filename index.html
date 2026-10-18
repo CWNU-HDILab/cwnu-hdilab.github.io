@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HDI Lab · Human Data Intelligence Lab, Changwon National University</title>
+<meta name="description" content="국립창원대학교 인공지능공학과 인간 데이터 지능 연구실(Human Data Intelligence Lab)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* =========================================================
+   HDI Lab design system
+   Color   paper / paper-2 / ink / ink-2 / muted / rule / accent
+   Type    Archivo (variable width) for Latin display + text,
+           Pretendard (if installed) → IBM Plex Sans KR for Hangul
+   Scale   12 · 13.5 · 15 · 17 · 20 · 24 · 32 · 44 · 60 · display
+   Space   4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128 · 176
+   Grid    12 columns, max 1440px, margin clamp(20,4vw,56), gutter clamp(16,2vw,28)
+   ========================================================= */
+:root{
+  --paper:#F7F6F2; --paper-2:#EEEDE7; --ink:#1B1C1F; --ink-2:#3E4147; --muted:#64676E;
+  --rule:#D5D3CB; --rule-ink:#1B1C1F; --accent:#1E3E8C; --accent-soft:rgba(30,62,140,.10);
+  --band:#1B1C1F; --band-ink:#F1F0EB; --band-muted:#A4A6AC; --band-rule:#3A3C42; --band-accent:#A9BDF2;
+  --f:"Archivo","Pretendard Variable","Pretendard","IBM Plex Sans KR",system-ui,sans-serif;
+  --m:clamp(20px,4vw,56px); --g:clamp(16px,2vw,28px); --max:1440px;
+  --hdr:64px;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#131416; --paper-2:#1B1D20; --ink:#ECEBE6; --ink-2:#C9CACD; --muted:#9B9EA5;
+    --rule:#2D3035; --rule-ink:#ECEBE6; --accent:#9DB4F0; --accent-soft:rgba(157,180,240,.12);
+    --band:#1E2024; --band-ink:#ECEBE6; --band-muted:#9B9EA5; --band-rule:#34373D; --band-accent:#9DB4F0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131416; --paper-2:#1B1D20; --ink:#ECEBE6; --ink-2:#C9CACD; --muted:#9B9EA5;
+  --rule:#2D3035; --rule-ink:#ECEBE6; --accent:#9DB4F0; --accent-soft:rgba(157,180,240,.12);
+  --band:#1E2024; --band-ink:#ECEBE6; --band-muted:#9B9EA5; --band-rule:#34373D; --band-accent:#9DB4F0;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr) + 24px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f);font-size:17px;line-height:1.72;font-weight:400;
+  word-break:keep-all;overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+::selection{background:var(--accent-soft)}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:var(--rule)}
+a:hover{text-decoration-color:currentColor}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:1px}
+h1,h2,h3,h4,p,dl,dd,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+img{max-width:100%}
+.tnum{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--m)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g)}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--paper);border-bottom:1px solid var(--rule)}
+.hdr .wrap{height:var(--hdr);display:flex;align-items:center;justify-content:space-between;gap:24px}
+.mark{display:flex;align-items:baseline;gap:14px;text-decoration:none}
+.mark b{font-weight:750;font-stretch:88%;font-size:20px;letter-spacing:-.01em}
+.mark span{font-size:13.5px;color:var(--muted);letter-spacing:.005em}
+.nav{display:flex;gap:28px}
+.nav a{font-size:15px;text-decoration:none;color:var(--ink-2);padding:8px 0;position:relative}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink)}
+.nav a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1.5px;background:var(--accent)}
+.menu-btn{display:none;font-size:15px;padding:10px 0;min-height:44px}
+@media (max-width:900px){
+  .mark span{display:none}
+  .menu-btn{display:block}
+  .nav{display:none;position:fixed;inset:calc(env(safe-area-inset-top,0px) + var(--hdr)) 0 0;background:var(--paper);flex-direction:column;gap:0;padding:16px var(--m) calc(32px + env(safe-area-inset-bottom,0px));overflow:auto}
+  .nav.open{display:flex}
+  .nav a{font-size:34px;font-weight:600;font-stretch:80%;color:var(--ink);padding:10px 0;border-bottom:1px solid var(--rule);letter-spacing:-.01em}
+  .nav a[aria-current="page"]{color:var(--accent)}
+  .nav a[aria-current="page"]::after{display:none}
+}
+
+/* ---------- shared type ---------- */
+.display{font-weight:800;font-stretch:70%;letter-spacing:-.025em;line-height:.88}
+.h2{font-size:clamp(34px,4vw,58px);font-weight:620;font-stretch:78%;letter-spacing:-.02em;line-height:1}
+.ko-sub{font-size:15px;color:var(--muted);line-height:1.5}
+.small{font-size:13.5px;line-height:1.55}
+.muted{color:var(--muted)}
+.lede{font-size:clamp(19px,1.6vw,22px);line-height:1.62;color:var(--ink-2);max-width:36em}
+.rule-strong{border:0;border-top:1.5px solid var(--rule-ink);margin:0}
+.more{font-size:15px;font-weight:500;text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:.3em}
+.more:hover{text-decoration-color:var(--ink)}
+
+/* section heads: one consistent device (title + Korean sub), placed differently per section */
+.shead{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:end;margin-bottom:clamp(32px,4vw,56px)}
+.shead .h2{grid-column:1/7}
+.shead .ko-sub{grid-column:7/11}
+.shead .more{grid-column:11/13;justify-self:end}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(28px,4.5vw,72px)}
+.hero-title{margin:0;font-size:15.5vw}
+.hero-title .ln{display:block;overflow:hidden;padding-bottom:.01em}
+.hero-title .in{display:inline-block;white-space:nowrap}
+.hero-title .l2{padding-left:calc((100% + var(--g)) / 12 * 6)}
+.animate .hero-title .in{transform:translateY(102%);animation:rise 1s cubic-bezier(.16,.84,.24,1) forwards}
+.animate .hero-title .l2 .in{animation-delay:.09s}
+.animate .hero-title .l3 .in{animation-delay:.18s}
+.animate .hero-foot{opacity:0;animation:fade .8s .55s ease forwards}
+@keyframes rise{to{transform:none}}
+@keyframes fade{to{opacity:1}}
+.hero-foot{padding-top:clamp(28px,3.5vw,48px);padding-bottom:clamp(64px,8vw,128px);row-gap:28px}
+.hero-id{grid-column:1/5;font-size:14px;line-height:1.6;color:var(--muted)}
+.hero-id b{display:block;color:var(--ink);font-weight:600;font-size:15px}
+.hero-lede{grid-column:7/13}
+.hero-lede p:first-child{font-size:clamp(19px,1.7vw,23px);line-height:1.62;color:var(--ink)}
+.hero-lede p+p{margin-top:16px;font-size:15px;color:var(--muted);line-height:1.6;max-width:34em}
+
+/* ---------- about ---------- */
+.about{padding-block:clamp(72px,9vw,136px)}
+.about .label{grid-column:1/4;font-size:15px;color:var(--muted);padding-top:.5em}
+.about-text{grid-column:4/12;font-size:clamp(22px,2.15vw,31px);line-height:1.55;letter-spacing:-.008em;font-weight:400;text-wrap:pretty}
+.facts{grid-column:4/12;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--g);margin-top:clamp(40px,5vw,64px);padding-top:20px;border-top:1px solid var(--rule)}
+.facts dt{font-size:13.5px;color:var(--muted);margin-bottom:4px}
+.facts dd{font-size:16px;line-height:1.55}
+
+/* ---------- research area index ---------- */
+.areas{padding-bottom:clamp(80px,10vw,144px)}
+.area-row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding:clamp(24px,2.8vw,36px) 0;border-top:1px solid var(--rule);text-decoration:none;align-items:start}
+.area-row:last-child{border-bottom:1px solid var(--rule)}
+.area-row .nm{grid-column:1/7}
+.area-row .nm b{display:block;font-size:clamp(30px,3.4vw,50px);font-weight:640;font-stretch:76%;letter-spacing:-.018em;line-height:1.02;transition:color .2s}
+.area-row .nm span{display:block;margin-top:8px;font-size:15px;color:var(--muted)}
+.area-row .ds{grid-column:7/11;font-size:15.5px;line-height:1.7;color:var(--ink-2)}
+.area-row .ct{grid-column:11/13;justify-self:end;text-align:right}
+.area-row .ct b{display:block;font-size:clamp(30px,3vw,44px);font-weight:600;font-stretch:80%;line-height:1;font-variant-numeric:tabular-nums}
+.area-row .ct span{font-size:13.5px;color:var(--muted)}
+.area-row:hover .nm b{color:var(--accent)}
+
+/* ---------- selected research (alternate surface) ---------- */
+.band-2{background:var(--paper-2)}
+.selected{padding-block:clamp(80px,10vw,144px)}
+.feat{grid-column:1/8}
+.feat .meta,.side .meta{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 16px;margin-bottom:16px}
+.award{color:var(--accent);font-weight:600}
+.feat h3{font-size:clamp(28px,3vw,44px);font-weight:520;font-stretch:90%;line-height:1.13;letter-spacing:-.015em;text-wrap:balance}
+.feat h3 a,.side h3 a{text-decoration:none}
+.feat h3 a:hover,.side h3 a:hover{text-decoration:underline;text-decoration-thickness:1px}
+.feat .by{margin-top:24px;font-size:15px;color:var(--ink-2)}
+.feat .vn{font-size:15px;color:var(--muted);font-style:italic}
+.feat .why{margin-top:28px;max-width:34em;font-size:16px;color:var(--ink-2);padding-top:20px;border-top:1px solid var(--rule)}
+.side{grid-column:9/13;display:flex;flex-direction:column}
+.side article{padding-bottom:28px}
+.side article+article{padding-top:28px;border-top:1px solid var(--rule)}
+.side h3{font-size:19px;font-weight:540;line-height:1.35;letter-spacing:-.005em}
+.side .by{margin-top:10px;font-size:14px;color:var(--ink-2)}
+.side .vn{font-size:14px;color:var(--muted);font-style:italic}
+
+/* ---------- publication list (shared) ---------- */
+.yr-group{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);border-top:1.5px solid var(--rule-ink);padding-top:18px;margin-bottom:clamp(40px,5vw,64px)}
+.yr-group>.yr{grid-column:1/3;font-size:clamp(40px,4.4vw,64px);font-weight:760;font-stretch:72%;line-height:.9;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.yr-group>.yr small{display:block;margin-top:10px;font-size:13.5px;font-weight:400;font-stretch:100%;letter-spacing:0;color:var(--muted)}
+.yr-group>ol{grid-column:3/13}
+.pub{display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:6px 32px;padding:18px 0 20px}
+.pub+.pub{border-top:1px solid var(--rule)}
+.pub h3{font-size:17.5px;font-weight:560;line-height:1.42;letter-spacing:-.004em;text-wrap:pretty}
+.pub h3 a{text-decoration:none}
+.pub h3 a:hover{text-decoration:underline}
+.pub .au{font-size:14.5px;color:var(--ink-2);margin-top:6px;line-height:1.55}
+.pub .vn{font-size:14.5px;color:var(--muted);line-height:1.55}
+.pub .vn i{font-style:italic}
+.pub .side-meta{font-size:13px;line-height:1.5;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.idx{font-weight:650;letter-spacing:.02em;font-size:12.5px}
+.idx.scie{color:var(--accent)}
+.pub .side-meta a{color:var(--muted)}
+.au b{font-weight:650;color:var(--ink)}
+.au .lab{text-decoration:underline;text-decoration-color:var(--muted);text-decoration-style:dotted;text-underline-offset:.25em}
+mark{background:var(--accent-soft);color:inherit;padding:0 1px}
+.compact .pub h3{font-size:16.5px}
+
+/* ---------- news ledger (home) ---------- */
+.news-home{padding-block:clamp(80px,10vw,136px)}
+.ledger{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--g);border-top:1.5px solid var(--rule-ink)}
+.ledger article{padding-top:20px;padding-right:8px}
+.ledger time{display:block;font-size:clamp(26px,2.4vw,34px);font-weight:620;font-stretch:78%;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.ledger .cat{display:block;margin-top:12px;font-size:13.5px;color:var(--accent);font-weight:550}
+.ledger p{margin-top:8px;font-size:15px;line-height:1.65;color:var(--ink-2)}
+
+/* ---------- gantt ---------- */
+.funded{padding-bottom:clamp(80px,10vw,136px)}
+.gantt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.gantt{min-width:760px;display:grid;grid-template-columns:minmax(220px,28%) 1fr;column-gap:var(--g)}
+.g-labels>div,.g-row{height:64px}
+.g-labels>div{display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--rule)}
+.g-labels b{font-size:15px;font-weight:560;line-height:1.35}
+.g-labels span{font-size:13px;color:var(--muted)}
+.g-plot{position:relative}
+.g-row{position:relative;border-top:1px solid var(--rule)}
+.g-bar{position:absolute;top:50%;height:8px;margin-top:-4px}
+.g-bar.on{background:var(--accent)}
+.g-bar.done{background:var(--muted)}
+.g-bar.soon{background:transparent;box-shadow:inset 0 0 0 1px var(--ink);background-image:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 6px)}
+.g-axis{position:relative;height:36px;border-top:1.5px solid var(--rule-ink)}
+.g-axis span{position:absolute;top:8px;font-size:12.5px;color:var(--muted);transform:translateX(-50%);font-variant-numeric:tabular-nums}
+.g-axis span:first-child{transform:none}
+.g-today{position:absolute;top:0;bottom:36px;width:0;border-left:1px solid var(--ink)}
+.g-today span{position:absolute;top:-22px;left:6px;font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.g-labels .g-axis-spacer{height:36px;border-top:1.5px solid var(--rule-ink)}
+.g-legend{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:20px;font-size:13.5px;color:var(--muted)}
+.g-legend i{display:inline-block;width:22px;height:8px;margin-right:8px;vertical-align:middle}
+
+/* ---------- contact band ---------- */
+.band{background:var(--band);color:var(--band-ink)}
+.band a{text-decoration-color:var(--band-rule)}
+.band a:hover{text-decoration-color:var(--band-ink)}
+.contact-band{padding-block:clamp(88px,11vw,168px)}
+.contact-band .label{grid-column:1/13;font-size:15px;color:var(--band-muted);margin-bottom:20px}
+.contact-band .mail{grid-column:1/13;font-size:clamp(34px,7.2vw,112px);font-weight:700;font-stretch:72%;letter-spacing:-.025em;line-height:.95;text-decoration:none;justify-self:start;overflow-wrap:anywhere}
+.contact-band .mail:hover{color:var(--band-accent)}
+.contact-band .cols{grid-column:1/13;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);margin-top:clamp(48px,6vw,88px);padding-top:20px;border-top:1px solid var(--band-rule)}
+.contact-band .cols>div{grid-column:span 4;font-size:15px;line-height:1.7}
+.contact-band .cols h3{font-size:13.5px;font-weight:400;color:var(--band-muted);margin-bottom:6px}
+
+/* ---------- page head ---------- */
+.phead{padding-top:clamp(40px,6vw,96px);padding-bottom:clamp(48px,6vw,88px);align-items:end;row-gap:24px}
+.phead h1{grid-column:1/13;font-size:clamp(72px,14vw,220px)}
+.phead .ph-ko{grid-column:1/5;font-size:15px;color:var(--muted)}
+.phead .lede{grid-column:7/13}
+
+/* ---------- research page ---------- */
+.rs{padding-block:clamp(56px,7vw,104px);border-top:1.5px solid var(--rule-ink)}
+.rs-aside{grid-column:1/5;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdr) + 32px)}
+.rs-aside h2{font-size:clamp(36px,3.8vw,56px);font-weight:660;font-stretch:74%;letter-spacing:-.02em;line-height:1}
+.rs-aside .ko-sub{margin-top:12px}
+.rs-aside dl{margin-top:32px;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;font-size:14px}
+.rs-aside dt{color:var(--muted)}
+.rs-aside dd{font-variant-numeric:tabular-nums}
+.rs-body{grid-column:6/13}
+.rs-body>p{font-size:clamp(18px,1.5vw,21px);line-height:1.7;max-width:36em}
+.kw{margin-top:24px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14.5px;color:var(--ink-2)}
+.kw li{position:relative}
+.rs-body h3{margin-top:56px;font-size:15px;font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:16px}
+.rs-body h3 a{font-weight:400;color:var(--muted);font-size:14px}
+.rs-body .pub{grid-template-columns:56px minmax(0,1fr) 132px}
+.rs-body .pub .y{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.rs-proj li{padding:14px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px}
+.rs-proj b{font-weight:550;font-size:16px}
+.rs-proj span{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---------- publications page ---------- */
+.pubs-page{padding-bottom:clamp(80px,10vw,144px)}
+.filters{grid-column:1/4;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdr) + 24px);max-height:calc(100vh - var(--hdr) - 48px);overflow:auto;padding-right:8px;padding-bottom:24px}
+.results{grid-column:4/13}
+.search{display:block;margin-bottom:32px}
+.search span{display:block;font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.search input{width:100%;font:inherit;font-size:17px;color:var(--ink);background:transparent;border:0;border-bottom:1.5px solid var(--rule-ink);padding:8px 0;border-radius:0;outline:none}
+.search input:focus-visible{border-bottom-color:var(--accent);outline:none;box-shadow:0 1.5px 0 0 var(--accent)}
+.search input::placeholder{color:var(--muted)}
+.fgroup{margin-bottom:28px}
+.fgroup h2{font-size:13.5px;font-weight:400;color:var(--muted);margin-bottom:6px}
+.fgroup ul{display:flex;flex-direction:column}
+.fbtn{display:flex;justify-content:space-between;align-items:baseline;width:100%;text-align:left;font-size:15px;padding:5px 0;min-height:34px;color:var(--ink-2)}
+.fbtn em{font-style:normal;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.fbtn:hover{color:var(--ink)}
+.fbtn[aria-pressed="true"]{color:var(--ink);font-weight:620}
+.fbtn[aria-pressed="true"] span{box-shadow:inset 0 -1.5px 0 var(--accent)}
+.fbtn[disabled]{opacity:.38;cursor:default}
+.legend{font-size:13px;color:var(--muted);line-height:1.6;padding-top:16px;border-top:1px solid var(--rule)}
+.legend b{color:var(--ink);font-weight:650}
+.legend .lab{text-decoration:underline dotted;text-underline-offset:.25em}
+.resbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px;font-size:14.5px;color:var(--muted)}
+.resbar button{text-decoration:underline;text-underline-offset:.25em;text-decoration-color:var(--rule);min-height:32px}
+.resbar button:hover{color:var(--ink);text-decoration-color:var(--ink)}
+.results .yr-group{grid-template-columns:repeat(9,minmax(0,1fr))}
+.results .yr-group>.yr{grid-column:1/3}
+.results .yr-group>ol{grid-column:3/10}
+.empty{padding:48px 0;border-top:1.5px solid var(--rule-ink);font-size:17px}
+.empty p+p{margin-top:8px;font-size:15px;color:var(--muted)}
+
+/* ---------- projects page ---------- */
+.proj-page{padding-bottom:clamp(80px,10vw,144px)}
+.archive{margin-top:clamp(72px,9vw,128px)}
+.arc-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);font-size:13.5px;color:var(--muted);padding-bottom:10px;border-bottom:1.5px solid var(--rule-ink)}
+.arc-head .c1{grid-column:1/4}.arc-head .c2{grid-column:4/9}.arc-head .c3{grid-column:9/12}.arc-head .c4{grid-column:12/13;text-align:right}
+details.proj{border-bottom:1px solid var(--rule)}
+details.proj summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding:22px 0;align-items:baseline}
+details.proj summary::-webkit-details-marker{display:none}
+details.proj .c1{grid-column:1/4;font-size:15px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+details.proj .c2{grid-column:4/9;font-size:clamp(18px,1.6vw,22px);font-weight:560;line-height:1.38;letter-spacing:-.006em;position:relative;padding-right:28px}
+details.proj .c2::after{content:"+";position:absolute;right:0;top:0;font-weight:300;color:var(--muted)}
+details.proj[open] .c2::after{content:"−"}
+details.proj .c3{grid-column:9/12;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+details.proj .c4{grid-column:12/13;text-align:right;font-size:13.5px;font-weight:600}
+.st-on{color:var(--accent)} .st-soon{color:var(--ink)} .st-done{color:var(--muted);font-weight:400!important}
+details.proj summary:hover .c2{color:var(--accent)}
+.proj-body{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding:0 0 32px}
+.proj-body dl{grid-column:4/12;display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px 24px;font-size:15px;line-height:1.65}
+.proj-body dt{color:var(--muted)}
+.proj-body .rel li{padding:4px 0}
+.proj-body .rel li span{color:var(--muted);font-size:13.5px;margin-left:8px}
+
+/* ---------- people page ---------- */
+.people-page{padding-bottom:clamp(80px,10vw,144px)}
+.pi{padding-bottom:clamp(64px,8vw,112px);row-gap:40px}
+.pi-name{grid-column:1/6}
+.pi-name .ko{font-size:clamp(56px,7vw,104px);font-weight:700;letter-spacing:-.04em;line-height:1;font-family:"Pretendard Variable","Pretendard","IBM Plex Sans KR",var(--f)}
+.pi-name .en{margin-top:14px;font-size:clamp(24px,2.4vw,34px);font-weight:560;font-stretch:82%;letter-spacing:-.01em;line-height:1.1}
+.pi-name .role{margin-top:20px;font-size:15px;color:var(--ink-2);line-height:1.6}
+.pi-name .links{margin-top:24px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+.pi-detail{grid-column:7/13}
+.pi-detail .interests{font-size:clamp(19px,1.6vw,22px);line-height:1.55;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+.cv{margin-top:28px}
+.cv h3{font-size:13.5px;font-weight:400;color:var(--muted);margin:28px 0 8px}
+.cv li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;font-size:15px;line-height:1.6;padding:5px 0}
+.cv li span{color:var(--muted);font-variant-numeric:tabular-nums}
+.grp{border-top:1.5px solid var(--rule-ink);padding-top:18px;margin-top:clamp(56px,7vw,96px)}
+.grp-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:8px}
+.grp-h h2{font-size:clamp(28px,2.8vw,40px);font-weight:640;font-stretch:78%;letter-spacing:-.015em;line-height:1.05}
+.grp-h span{font-size:14px;color:var(--muted)}
+.mem{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding:24px 0;border-bottom:1px solid var(--rule);row-gap:8px}
+.mem .n{grid-column:1/4}
+.mem .n b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.mem .n span{font-size:14.5px;color:var(--ink-2)}
+.mem .r{grid-column:4/7;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.mem .w{grid-column:7/11;font-size:14.5px;line-height:1.6}
+.mem .w h4{font-size:13px;font-weight:400;color:var(--muted);margin-bottom:2px}
+.mem .w li+li{margin-top:4px}
+.mem .w li span{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:8px}
+.mem .c{grid-column:11/13;font-size:14px;text-align:right;overflow-wrap:anywhere}
+.none{padding:28px 0;font-size:15px;color:var(--muted);border-bottom:1px solid var(--rule)}
+
+/* ---------- news page ---------- */
+.news-page{padding-bottom:clamp(80px,10vw,144px)}
+.ntabs{display:flex;flex-wrap:wrap;gap:4px 28px;margin-bottom:40px}
+.ntabs .fbtn{width:auto;gap:8px}
+.nrow{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding:20px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.nrow time{grid-column:1/3;font-size:15px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.nrow .cat{grid-column:3/5;font-size:13.5px;color:var(--accent);font-weight:550}
+.nrow p{grid-column:5/12;font-size:16.5px;line-height:1.65}
+.nrow p a{text-decoration-color:var(--muted)}
+.nrow .tag{font-size:12.5px;color:var(--muted);margin-left:8px;white-space:nowrap}
+
+/* ---------- contact page ---------- */
+.ct-main{padding-bottom:clamp(64px,8vw,112px);row-gap:48px}
+.addr{grid-column:1/8;font-size:clamp(26px,2.8vw,40px);line-height:1.35;letter-spacing:-.015em;font-weight:500}
+.addr small{display:block;margin-top:20px;font-size:15px;letter-spacing:0;color:var(--muted);font-weight:400;line-height:1.6}
+.ct-side{grid-column:9/13}
+.ct-side dl{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px 20px;font-size:15px;line-height:1.6}
+.ct-side dt{color:var(--muted)}
+.maplinks{margin-top:32px;padding-top:16px;border-top:1px solid var(--rule)}
+.maplinks h2{font-size:13.5px;font-weight:400;color:var(--muted);margin-bottom:8px}
+.maplinks ul{display:flex;flex-wrap:wrap;gap:4px 24px;font-size:15px}
+.maplinks a{display:inline-block;padding:6px 0}
+.apply{padding-block:clamp(72px,9vw,128px);border-top:1.5px solid var(--rule-ink)}
+.apply h2{grid-column:1/6}
+.apply .body{grid-column:7/13;font-size:clamp(18px,1.5vw,21px);line-height:1.7}
+.apply .body p+p{margin-top:16px}
+.apply .body .small{color:var(--muted)}
+
+/* ---------- teaching page ---------- */
+.teach-page{padding-bottom:clamp(80px,10vw,144px)}
+.tmx-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tmx{width:100%;min-width:620px;border-collapse:collapse;font-size:15px}
+.tmx th,.tmx td{border-bottom:1px solid var(--rule);padding:14px 0;font-weight:400;text-align:left}
+.tmx thead th{font-size:13.5px;color:var(--muted);border-bottom:1.5px solid var(--rule-ink);padding:8px 0 10px;text-align:center;font-variant-numeric:tabular-nums}
+.tmx thead th:first-child{text-align:left}
+.tmx thead th span{display:block;font-size:12px;margin-top:2px}
+.tmx thead th.cur{color:var(--accent);font-weight:600}
+.tmx tbody th{font-weight:550;padding-right:16px}
+.tmx tbody th span{margin-left:10px;font-size:13px;color:var(--muted);font-weight:400}
+.tmx td{text-align:center;width:13%}
+.tmx td i{display:inline-block;width:12px;height:12px;background:var(--ink);vertical-align:middle}
+.tmx .cur{background:var(--accent-soft)}
+.tmx td.cur i{background:var(--accent)}
+.crs{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:12px;padding:28px 0;border-bottom:1px solid var(--rule)}
+.crs .n{grid-column:1/6}
+.crs .n b{display:block;font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.3;font-family:"Pretendard Variable","Pretendard","IBM Plex Sans KR",var(--f)}
+.crs .n .en{display:block;margin-top:2px;font-size:15px;color:var(--ink-2)}
+.crs .n .mt{margin-top:12px;font-size:13.5px;color:var(--muted);line-height:1.6}
+.crs .now{color:var(--accent);font-weight:600}
+.crs .d{grid-column:6/13;font-size:15.5px;line-height:1.72;color:var(--ink-2)}
+.crs .d p{max-width:40em}
+.crs .d a{display:inline-block;margin-top:12px;font-size:14.5px;color:var(--ink);padding:4px 0}
+@media (max-width:860px){.crs>*{grid-column:1/-1 !important}}
+
+.map{margin:0 auto;padding-bottom:clamp(72px,9vw,128px)}
+.map-frame{position:relative;aspect-ratio:21/9;background:var(--paper-2);overflow:hidden}
+.map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) contrast(1.05)}
+.map figcaption{margin-top:12px;font-size:13.5px;color:var(--muted)}
+@media (max-width:860px){.map-frame{aspect-ratio:4/3}}
+
+/* ---------- footer ---------- */
+.ftr{border-top:1px solid var(--rule);padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));font-size:13.5px;color:var(--muted)}
+.ftr .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px}
+.ftr nav{display:flex;flex-wrap:wrap;gap:4px 24px}
+
+main{min-height:60vh}
+main.enter{animation:fade .28s ease}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .feat{grid-column:1/13}
+  .side{grid-column:1/13;margin-top:56px;display:grid;grid-template-columns:1fr 1fr;column-gap:var(--g)}
+  .side article+article{padding-top:0;border-top:0}
+  .side article{border-top:1px solid var(--rule);padding-top:24px}
+  .ledger{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:32px}
+  .filters{grid-column:1/13;position:static;max-height:none;overflow:visible;padding:0;margin-bottom:40px}
+  .fgroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--g)}
+  .results{grid-column:1/13}
+}
+@media (max-width:860px){
+  body{font-size:16.5px}
+  .grid>*,.shead>*,.yr-group>*,.mem>*,.nrow>*,.area-row>*,.proj-body>*,details.proj summary>*,.contact-band .cols>div{grid-column:1/-1 !important}
+  .shead{row-gap:10px}
+  .shead .more{justify-self:start}
+  .hero-title{font-size:17vw}
+  .hero-title .l2{padding-left:33%}
+  .area-row{row-gap:12px}
+  .area-row .ct{justify-self:start;text-align:left;display:flex;align-items:baseline;gap:8px}
+  .area-row .ct b{font-size:24px}
+  .facts{grid-template-columns:1fr}
+  .yr-group{row-gap:12px}
+  .pub,.rs-body .pub{grid-template-columns:1fr}
+  .rs-body .pub .y{display:none}
+  .pub .side-meta{text-align:left;align-items:flex-start;flex-direction:row;flex-wrap:wrap;gap:4px 14px}
+  .results .yr-group>*{grid-column:1/-1}
+  .rs-aside{position:static}
+  .rs-body{margin-top:32px}
+  .ledger{grid-template-columns:1fr}
+  .side{display:flex}
+  .side article+article{border-top:1px solid var(--rule);padding-top:24px}
+  .fgroups{grid-template-columns:1fr}
+  .fgroup ul{flex-direction:row;flex-wrap:wrap;gap:0 20px}
+  .fbtn{width:auto;gap:6px}
+  .arc-head{display:none}
+  details.proj summary{row-gap:6px}
+  details.proj .c4{text-align:left}
+  .proj-body dl{grid-template-columns:1fr;gap:2px}
+  .proj-body dd{margin-bottom:12px}
+  .mem .c{text-align:left}
+  .cv li{grid-template-columns:1fr;gap:0}
+  .ct-side dl{grid-template-columns:72px 1fr}
+  .nrow{row-gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .animate .hero-title .in{transform:none}
+  .animate .hero-foot{opacity:1}
+}
+</style>
+</head>
+<body>
+<a class="sr" href="#main">본문으로 건너뛰기</a>
+<header class="hdr">
+  <div class="wrap">
+    <a class="mark" href="#/"><b>HDI Lab</b><span>Human Data Intelligence Lab, Changwon National University</span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">메뉴</button>
+    <nav class="nav" id="nav" aria-label="주 메뉴">
+      <a href="#/research" data-p="research">Research</a>
+      <a href="#/publications" data-p="publications">Publications</a>
+      <a href="#/projects" data-p="projects">Projects</a>
+      <a href="#/people" data-p="people">People</a>
+      <a href="#/teaching" data-p="teaching">Teaching</a>
+      <a href="#/news" data-p="news">News</a>
+      <a href="#/contact" data-p="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <span>© 2026 Human Data Intelligence Lab, Department of Artificial Intelligence Engineering, Changwon National University</span>
+    <nav aria-label="외부 링크">
+      <a href="https://scholar.google.co.kr/citations?user=VLzN8BEAAAAJ&hl=ko" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://sites.google.com/view/prof-junginchoi" target="_blank" rel="noopener">이전 홈페이지</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   CONTENT DATA
+   모든 페이지는 아래 데이터에서 생성됩니다. 항목을 추가하면 목록, 필터, 연구 분야 집계, 구성원별 실적이 함께 갱신됩니다.
+   출처: sites.google.com/view/prof-junginchoi (Home, People, Publications), 2026.10 기준
+   ========================================================= */
+
+const AREAS = {
+  beh: {
+    en: "Human Behavior Recognition",
+    ko: "인간 행동 인식",
+    desc: "영상, 포인트 클라우드, 스마트기기 센서, 음성, 전력 사용 데이터에서 개인과 집단의 행동을 인식하고 이상 상황을 감지하는 방법을 연구합니다. 보행 인식, 실내 그룹 활동 인식, 폭력 행동 탐지, 운전자 주의 산만 감지, 전력 시계열 기반 생활 행동 분류가 중심이며, 로봇과 차량 환경에서 사용자의 음성을 인식하고 특성을 분류하는 연구도 이 분야에서 함께 다룹니다.",
+    short: "영상, 포인트 클라우드, 센서, 음성, 전력 데이터로 개인과 집단의 행동을 인식하고 이상 상황을 감지합니다.",
+    kw: ["Activity Recognition", "Gait Recognition", "Group Activity", "Point Cloud", "Abnormal Situation Detection", "Energy Time Series", "Speech in Robot & Vehicle Environments"]
+  },
+  sys: {
+    en: "Physical AI & Data Systems",
+    ko: "피지컬 AI와 데이터 시스템",
+    desc: "현실의 설비와 환경을 데이터로 다루는 시스템을 연구합니다. 디지털트윈과 생성형 AI 기반 합성 데이터 구축, 초음파 위상배열(PAUT) 데이터 기반 결함 탐지, V2X 환경의 이벤트 소싱 데이터 아키텍처, 무인 항공기 운용자 인증, 농업 데이터 분석을 포함합니다.",
+    short: "디지털트윈, 합성 데이터, 산업 결함 탐지, V2X 데이터 아키텍처처럼 현실의 시스템을 데이터로 다룹니다.",
+    kw: ["Physical AI", "Digital Twin", "Synthetic Data", "Defect Detection", "Event Sourcing & CQRS", "V2X"]
+  },
+  edu: {
+    en: "AI, SW & Quantum Education",
+    ko: "AI, SW, 양자 교육",
+    desc: "생성형 AI 이후의 AI 리터러시, 비전공자 컴퓨팅 교육, AI 윤리 교육, 고등학생 대상 양자컴퓨팅 교육처럼 학습자가 AI와 컴퓨팅을 배우는 과정을 설계하고 그 효과를 실증적으로 분석합니다. 연구 결과는 교재와 교육 프로그램으로 이어집니다.",
+    short: "AI 리터러시, 비전공자 컴퓨팅, AI 윤리, 양자컴퓨팅 교육을 설계하고 효과를 실증적으로 분석합니다.",
+    kw: ["AI Literacy", "Generative AI in Education", "PBL", "AI Ethics Education", "Quantum Computing Education"]
+  }
+};
+const AREA_ORDER = ["beh", "sys", "edu"];
+
+/* type: journal | conference | book
+   index: SCIE | Scopus | KCI | International | Domestic | Book
+   members: 연구실 구성원 key (PEOPLE 참조) */
+const PUBS = [
+  {id:"j0", type:"journal", index:"SCIE", year:2026, date:"2026-10", area:"edu", members:["jang"], title:"“It Works, but I Don’t Know Why”: Uncritical Use, Verification Behavior and Perceived Understanding in Non-CS Students’ Generative AI-Assisted Programming Projects", authors:"Yeeun Jang, Jung-In Choi", venue:"Applied Sciences", detail:"16(20), 10056", doi:"10.3390/app162010056"},
+  {id:"j1", type:"journal", index:"KCI", year:2026, area:"edu", title:"Research Trends in AI Literacy After the Emergence of Generative AI: A Bibliometric Analysis", authors:"Eun-Hee Goo, Jung-In Choi", venue:"Journal of The Korea Society of Computer and Information", detail:"31(9), 281–293", url:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003383557"},
+  {id:"j2", type:"journal", index:"Scopus", year:2026, area:"edu", title:"What motivates university students to learn AI?: The role of competency and interest in educational demand", authors:"Yue Li, Yong-Jik Lee, Jung-In Choi", venue:"International Journal of Systematic Innovation", detail:"10(4)", doi:"10.6977/IJoSI.202607_10(4).026140045", url:"https://doi.org/10.6977/IJoSI.202607_10%284%29.026140045"},
+  {id:"j3", type:"journal", index:"KCI", year:2026, area:"edu", title:"Exploring AI Literacy Across Academic Disciplines: University Students’ Knowledge, Attitudes, and Learning Challenges", authors:"Yong-Jik Lee, Jung-In Choi", venue:"Journal of the Korea Academia-Industrial cooperation Society", detail:"27(1), 495–507", url:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003301604"},
+  {id:"j4", type:"journal", index:"Scopus", year:2025, area:"edu", title:"Integrating generative AI into EFL writing: University students’ strategies and perceptions", authors:"Yong-Jik Lee, Robert O. Davis, Jung-In Choi", venue:"Online Journal of Communication and Media Technologies", detail:"15(4), e202541", doi:"10.30935/ojcmt/17545"},
+  {id:"j5", type:"journal", index:"KCI", year:2025, area:"sys", title:"A Study on the Productivity Enhancement Mechanism of AI-Based Agricultural Data Analysis Technology", authors:"Jung-In Choi", venue:"Smart Media Journal", detail:"14(11), 119–128"},
+  {id:"j6", type:"journal", index:"SCIE", year:2025, area:"sys", title:"Deep Learning-Based Approach for Automatic Defect Detection in Complex Structures Using PAUT Data", authors:"Kseniia Barshok, Jung-In Choi, Jaesun Lee", venue:"Sensors", detail:"25(19), 6128", doi:"10.3390/s25196128"},
+  {id:"j7", type:"journal", index:"SCIE", year:2025, area:"edu", title:"Effectiveness and Design of PBL-Based Project Approach for Non-Major University Computing Courses", authors:"Jung-In Choi, Sooyeon Yang", venue:"Applied Sciences", detail:"15(1), 50", doi:"10.3390/app15010050"},
+  {id:"j8", type:"journal", index:"SCIE", year:2024, area:"edu", title:"The Effects of an Ethics Education Program on Artificial Intelligence among Middle School Students: Analysis of Perception and Attitude Changes", authors:"Jung-In Choi, Eunja Yang, Eun-Hee Goo", venue:"Applied Sciences", detail:"14(4), 1588", doi:"10.3390/app14041588"},
+  {id:"j9", type:"journal", index:"SCIE", year:2023, area:"sys", title:"An Efficient Confidence Interval-Based Dual-Key Fuzzy Vault Scheme for Operator Authentication of Autonomous Unmanned Aerial Vehicles", authors:"Jung-In Choi, Juhee Lee, Aeyoung Kim", venue:"Applied Sciences", detail:"13(15), 8894", doi:"10.3390/app13158894"},
+  {id:"j10", type:"journal", index:"KCI", year:2022, area:"sys", title:"BSM Framework Using Event-Sourcing and CQRS Pattern in V2X Environment", authors:"Sangkon Han, EunHee Goo, Jung-In Choi", venue:"Journal of the Korea Society of Computer and Information", detail:"27(8), 169–176", doi:"10.9708/jksci.2022.27.08.169"},
+  {id:"j11", type:"journal", index:"SCIE", year:2022, area:"beh", title:"Smart Devices Based Multisensory Approach for Complex Human Activity Recognition", authors:"Muhammad Hanif, Tallha Akram, Aamir Shahzad, Muhammad Attique Khan, Usman Tariq, Jung-In Choi, Yun-Seong Nam, Zanib Zulfiqar", venue:"Computers, Materials & Continua", detail:"70(2), 3221–3234", doi:"10.32604/cmc.2022.019815"},
+  {id:"j12", type:"journal", index:"SCIE", year:2021, area:"beh", title:"Human Gait Recognition: A Single Stream Optimal Deep Learning Features Fusion", authors:"Faizan Saleem, Muhammad Attique Khan, Majed Alhaisoni, Usman Tariq, Ammar Armghan, Fayadh Alenezi, Jung-In Choi, Seifedine Kadry", venue:"Sensors", detail:"21(22), 7584", doi:"10.3390/s21227584"},
+  {id:"j13", type:"journal", index:"SCIE", year:2021, area:"sys", title:"Improved Text Summarization of News Articles Using GA-HC and PSO-HC", authors:"Muhammad Mohsin, Shazad Latif, Muhammad Haneef, Usman Tariq, Muhammad Attique Khan, Sefedine Kadry, Hwan-Seung Yong, Jung-In Choi", venue:"Applied Sciences", detail:"11(22), 10511", doi:"10.3390/app112210511"},
+  {id:"j14", type:"journal", index:"SCIE", year:2021, area:"beh", title:"Human gait recognition using deep learning and improved ant colony optimization", authors:"Awais Khan, Muhammad Attique Khan, Muhammad Younus Javed, Majed Alhaisoni, Usman Tariq, Seifedine Nimer Kadry, Jung-In Choi, Yunyoung Nam", venue:"Computers, Materials & Continua", detail:"70(2), 2113–2130", url:"https://www.techscience.com/cmc/v70n2/44619"},
+  {id:"j15", type:"journal", index:"SCIE", year:2021, area:"beh", title:"Intelligent Deep Learning and Improved Whale Optimization Algorithm Based Framework for Object Recognition", authors:"Nazar Hussain, Muhammad Attique Khan, Seifedine Nimer Kadry, Usman Tariq, Reham R. Mostafa, Jung-In Choi, Yunyoung Nam", venue:"Human-centric Computing and Information Sciences", detail:"11, 34", doi:"10.22967/HCIS.2021.11.034"},
+  {id:"j16", type:"journal", index:"SCIE", year:2021, area:"beh", title:"Real-Time Violent Action Recognition Using Key Frames Extraction and Deep Learning", authors:"Muzamil Ahmed, Muhammad Ramzan, Hikmat Ullah Khan, Saqib Iqbal, Muhammad Attique Khan, Jung-In Choi, Yunyoung Nam, Seifedine Nimer Kadry", venue:"Computers, Materials & Continua", detail:"69(2), 2217–2230", doi:"10.32604/cmc.2021.018103"},
+  {id:"j17", type:"journal", index:"KCI", year:2021, area:"beh", title:"Study on Driver’s Distraction Research Trend and Deep Learning Based Behavior Recognition Model", authors:"Sangkon Han, Jung-In Choi", venue:"Journal of the Korea Society of Computer and Information", detail:"26(11), 173–182", doi:"10.9708/jksci.2021.26.11.173"},
+  {id:"j18", type:"journal", index:"KCI", year:2020, area:"sys", title:"Case Studies and Trends in Data Reproduction and Distributed Processing using Event Sourcing and CQRS Pattern", authors:"Sangkon Han, Jung-In Choi, Gyun Woo", venue:"Journal of KIISE", detail:"47(12), 1101–1110", url:"https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002655909"},
+
+  {id:"c1", type:"conference", index:"International", year:2026, date:"2026-08-11", area:"beh", award:"Best Paper Award", members:["myeong","jang"], title:"Performance Analysis of a State-Aware Speech Enhancement Model Using Robot Operating-State Information", authors:"Sohee Myeong, Yeeun Jang, Jung-In Choi", venue:"The 15th International Conference on Smart Media & Applications"},
+  {id:"c2", type:"conference", index:"International", year:2026, date:"2026-08-11", area:"edu", members:["seo","jang","kang"], title:"From AI Literacy to Generative AI Literacy: An Analysis of Research Themes and Knowledge Structures", authors:"Yeon-Du Seo, Yeeun Jang, Junmin Kang, Jung-In Choi", venue:"The 15th International Conference on Smart Media & Applications"},
+  {id:"c3", type:"conference", index:"International", year:2026, date:"2026-08-11", area:"beh", members:["lee"], title:"Speech-Based Age Group Classification for Age-Adaptive Human–Vehicle Interaction in Autonomous Driving", authors:"Chae-Min Lee, Jung-In Choi", venue:"The 15th International Conference on Smart Media & Applications"},
+  {id:"c4", type:"conference", index:"International", year:2026, date:"2026-08-11", area:"sys", members:["jo"], title:"A Study on Synthetic Dataset Generation Using Generative AI and Blender-based 3D Virtual Environments", authors:"A-Jeong Jo, Jung-In Choi", venue:"The 15th International Conference on Smart Media & Applications"},
+  {id:"c5", type:"conference", index:"Domestic", year:2026, date:"2026-06-26", area:"edu", award:"우수논문상", title:"대학교육에서의 인공지능 리터러시 탐색 연구", authors:"이용직, 최정인", venue:"한국산학기술학회 춘계학술대회"},
+  {id:"c6", type:"conference", index:"Domestic", year:2026, date:"2026-04-25", area:"beh", award:"우수논문상", members:["lee"], title:"일본어 음향 특성 최적화를 위한 Whisper 모델 Fine-tuning 방법론", authors:"이채민, 최정인", venue:"한국스마트미디어학회 춘계학술대회"},
+  {id:"c7", type:"conference", index:"Domestic", year:2026, date:"2026-04-25", area:"beh", members:["kang"], title:"소형 전력 측정 데이터를 활용한 AI 기반 가전 기기 부하 식별 및 절전 연구", authors:"강준민, 최정인", venue:"한국스마트미디어학회 춘계학술대회"},
+  {id:"c8", type:"conference", index:"Domestic", year:2026, date:"2026-04-25", area:"beh", members:["myeong"], title:"로봇 주변 소음 모델링을 통한 음성 인식 성능 평가", authors:"명소희, 최정인", venue:"한국스마트미디어학회 춘계학술대회"},
+  {id:"c9", type:"conference", index:"Domestic", year:2026, date:"2026-04-25", area:"beh", members:["seo"], title:"초개인화 능동성 음성 AI 인터페이스 구축 연구 추진", authors:"서연두, 최정인", venue:"한국스마트미디어학회 춘계학술대회"},
+  {id:"c10", type:"conference", index:"Domestic", year:2026, date:"2026-04-25", area:"beh", members:["jo"], title:"전력 시계열 기반 생활 행동 분류 모델 연구", authors:"조아정, 최정인", venue:"한국스마트미디어학회 춘계학술대회"},
+  {id:"c11", type:"conference", index:"Domestic", year:2026, date:"2026-01-22", area:"edu", title:"지역 기반 생성형 AI 리터러시 프로그램의 대규모 적용 효과 분석: 인지·동기·경험 요소를 통합한 지역 단위 실증 연구", authors:"최정인, 이지영, 박혜영, 김애영", venue:"한국컴퓨터교육학회 동계학술대회"},
+  {id:"c12", type:"conference", index:"Domestic", year:2025, date:"2025-11-29", area:"edu", title:"생성형 AI 도구를 활용한 대학 교양영어 수업 연구", authors:"이용직, 최정인", venue:"한국교양교육학회, 포스텍"},
+  {id:"c13", type:"conference", index:"Domestic", year:2025, date:"2025-11-21", area:"edu", title:"대학생 전공별 AI리터러시 현황과 교육적 시사점", authors:"이용직, 최정인, 여열", venue:"한국산학기술학회, 경주"},
+  {id:"c14", type:"conference", index:"International", year:2025, date:"2025-10-14", area:"edu", title:"Design of a quantum computing education program for high school students", authors:"Jung-In Choi, Hanjin Cho, Aeyoung Kim", venue:"International Conference on ICT Convergence (ICTC), Jeju, Korea"},
+  {id:"c15", type:"conference", index:"Domestic", year:2025, date:"2025-08-14", area:"edu", title:"초중등 정보교육의 핵심 역량과 대학 AI 교양교육의 연계 전략", authors:"최정인, 이용직", venue:"한국정보교육학회, 서울 코엑스"},
+  {id:"c16", type:"conference", index:"International", year:2024, date:"2024-12-19", area:"beh", award:"Best Paper Award", title:"Group Activity Recognition in Indoor Spaces Using Point Clouds", authors:"Jung-In Choi", venue:"The 13th International Conference on Smart Media & Applications, National University of Laos, Vientiane"},
+
+  {id:"b1", type:"book", index:"Book", year:2025, date:"2025-08", area:"edu", title:"Python으로 배우는 데이터 과학 기초 및 분석", authors:"최정인, 구은희, 박미현", venue:"도서출판 홍릉", detail:"ISBN 979-11-5600-983-2", url:"https://product.kyobobook.co.kr/detail/S000217395567"},
+  {id:"b2", type:"book", index:"Book", year:2024, area:"edu", title:"파이썬 실습으로 마스터하기: 예제 중심의 학습 가이드", authors:"구은희, 최정인", venue:"아주대학교 출판사", detail:"ISBN 978-89-5899-136-6"}
+];
+
+/* status는 오늘 날짜와 기간으로 자동 계산됩니다. role, goal은 확인된 내용만 입력하세요. */
+const PROJECTS = [
+  {id:"dax", short:"D.AX 대학원", title:"D.AX 대학원", agency:"과학기술정보통신부", program:"인공지능혁신인재양성사업", start:"2026-11-01", end:"2031-12-31", summary:"과학기술정보통신부 인공지능혁신인재양성사업으로 추진되는 D.AX 대학원 사업입니다.", areas:[], pubs:[]},
+  {id:"nrl", short:"SMR² 플랫폼 국가연구소", title:"SMR² 플랫폼 국가연구소", agency:"한국연구재단", program:"국가연구소 사업 (NRL 2.0)", start:"2026-07-01", end:"2035-12-31", summary:"한국연구재단 국가연구소 사업(NRL 2.0)으로 추진되는 SMR² 플랫폼 국가연구소 과제입니다.", areas:["sys"], pubs:[]},
+  {id:"anchor", short:"전동트롤리 디지털트윈", title:"Physical AI 기반 중량물 이송 전동트롤리 원격운용 디지털트윈 플랫폼 개발", agency:"국립창원대학교 앵커사업단", program:"", start:"2026-07", end:"2027-01", summary:"중량물 이송용 전동트롤리를 원격으로 운용하기 위한 Physical AI 기반 디지털트윈 플랫폼을 개발합니다.", areas:["sys"], pubs:[]},
+  {id:"dna", short:"DNA+ 연구소", title:"DNA+ 연구소", agency:"한국연구재단", program:"기반구축사업 (글로컬랩)", start:"2025-09", end:"2034-08", summary:"한국연구재단 기반구축사업(글로컬랩)으로 추진되는 DNA+ 연구소 과제입니다.", areas:[], pubs:[]},
+  {id:"v2x", short:"V2X 운전자 주의 산만 감지", title:"V2X 환경에서 차량 내부·외부·주변 사용자 그룹의 행동 인식 기법을 활용한 운전자 주의 산만 유발 감지 연구", agency:"한국연구재단", program:"이공학개인기초연구", role:"연구책임자", start:"2018-07-01", end:"2021-05-31", summary:"V2X 환경에서 차량 내부, 외부, 주변 사용자 그룹의 행동을 인식해 운전자의 주의 산만을 유발하는 상황을 감지하는 연구입니다.", areas:["beh","sys"], pubs:["j17","j10"]}
+];
+
+/* 구성원: 이름, 소속, 관심 분야, 이메일, 개인 홈페이지(homepage)를 입력합니다.
+   alumni 예시: {ko:"홍길동", en:"Gil-Dong Hong", role:"M.S., 2027", now:"현재 소속", email:"", homepage:""} */
+const PEOPLE = {
+  pi: {
+    ko:"최정인", en:"Jung-In Choi", title:"Assistant Professor",
+    dept:"Department of Artificial Intelligence Engineering, Changwon National University",
+    email:"junginchoi@changwon.ac.kr",
+    scholar:"https://scholar.google.co.kr/citations?user=VLzN8BEAAAAJ&hl=ko",
+    interests:["Activity Recognition","Abnormal Situation Detection","AI Education","Quantum Computer Education"],
+    education:[["2017","Ph.D. in Computer Science, Ewha Womans University"],["2012","M.S. in Computer Science, Ewha Womans University"]],
+    career:[["2023.03 – 2024.10","서울대학교 기초교육원 강의조교수"],["2020.09 – 2022.08","아주대학교 인공지능융합학과 특임교수"],["2018.07 – 2020.08","부산대학교 SW교육센터 강의전담 및 초빙교수"]],
+    service:[["2025.06 –","국립창원대학교 입학취업처 부처장"],["2024.08 – 2027.07","한국발명진흥회 지식재산 가치평가 품질관리 사업 외부전문가"]]
+  },
+  graduate: [
+    {key:"jang", ko:"장예은", en:"Yeeun Jang", role:"Master’s student", dept:"Dept. of Artificial Intelligence Engineering", interests:["Physical AI","Digital Twin","OpenUSD"], email:"20267317@gs.cwnu.ac.kr", homepage:""}
+  ],
+  undergraduate: [
+    {key:"kang", ko:"강준민", en:"Junmin Kang", role:"Research Intern", dept:"Dept. of AI Electrical Engineering", interests:[], email:"03junmin@naver.com", homepage:""},
+    {key:"myeong", ko:"명소희", en:"Sohee Myeong", role:"Research Intern", dept:"Dept. of Artificial Intelligence Engineering", interests:[], email:"myeongsohui390@gmail.com", homepage:""},
+    {key:"park", ko:"박지성", en:"", role:"Research Intern (on leave)", dept:"Dept. of Artificial Intelligence Engineering", interests:[], email:"", homepage:""},
+    {key:"seo", ko:"서연두", en:"Yeon-Du Seo", role:"Research Intern", dept:"Dept. of Artificial Intelligence Engineering", interests:[], email:"yeondu060307@naver.com", homepage:""},
+    {key:"lee", ko:"이채민", en:"Chae-Min Lee", role:"Research Intern", dept:"Dept. of Artificial Intelligence Engineering", interests:[], email:"k32833997@gmail.com", homepage:""},
+    {key:"jo", ko:"조아정", en:"A-Jeong Jo", role:"Research Intern", dept:"Dept. of Artificial Intelligence Engineering", interests:[], email:"choajung06@naver.com", homepage:""}
+  ],
+  alumni: []
+};
+
+/* 강의: level grad(대학원) | ug(학부) | hs(고등학교 정규 교과), offered는 담당 학기 "연도-학기". 새 학기를 추가하면 학기별 표에 열이 자동으로 생깁니다. */
+const COURSES = [
+  {id:"hba", level:"grad", ko:"AI와인간행동분석론", en:"AI and Human Behavior Analysis", sem:["가을"], offered:["2026-2"], desc:"This course introduces the fundamental concepts of Human Behavior Analysis and AI-based behavior understanding. Students learn how human behavior is represented, sensed, analyzed, and applied using sensor data and artificial intelligence. Through literature review seminars, students develop the ability to analyze research trends, critically evaluate existing studies, and present research findings effectively."},
+  {id:"seminar", level:"grad", ko:"산업현장세미나", en:"", sem:["봄"], offered:["2026-1"], desc:"AI 기술을 중심으로 산업현장의 최신 이슈와 실무 환경을 이해하고, 기업 현장에서 요구되는 문제를 AI 관점에서 재해석하는 역량을 기르는 것을 목표로 한다. 또한 AI 기반 분석 도구를 활용하여 산업 데이터를 체계적으로 분석하고, 데이터 기반 의사결정을 수행하는 실무 능력을 함양한다."},
+  {id:"db", level:"ug", ko:"데이터베이스(캡스톤디자인)", en:"Database (Capstone Design)", sem:["가을"], offered:["2026-2"], desc:"This course introduces the fundamental concepts and techniques of relational database systems. Students will learn data modeling, Entity-Relationship (ER) modeling, relational database design, SQL programming, normalization, indexing, and transaction management. Through a capstone design project, students will apply these concepts to analyze real-world requirements, design and implement a database system, and demonstrate practical problem-solving skills. The course emphasizes both theoretical foundations and hands-on database development."},
+  {id:"py", level:"ug", ko:"인공지능시대의파이썬프로그래밍", en:"Python Programming in the Age of AI", sem:["봄","가을"], offered:["2026-1","2026-2"], desc:"인공지능 시대의 핵심 도구인 파이썬(Python) 프로그래밍을 중심으로, 기초적인 프로그래밍 이해와 활용 경험을 갖도록 하는 것을 목표로 한다. 파이썬 프로그래밍 기본 개념을 이해하고 간단한 코드 작성을 통해 컴퓨팅 사고력을 기르며, 인공지능과 데이터 기술이 일상과 사회에 어떻게 활용되는지 기초적으로 이해하게 된다."},
+  {id:"aidata", level:"ug", ko:"인공지능데이터활용기초", en:"AI-driven Data Utilization Basics", sem:["봄","가을"], offered:["2026-1"], desc:"데이터 수집, 정제, 시각화, 기초 분석 등 데이터과학의 전 과정을 기초부터 다루며, 인공지능 시대의 데이터 활용 능력을 강화하는 데 초점을 둔다. 학생들은 파이썬과 주요 데이터 라이브러리를 활용해 데이터 기반 의사결정 과정을 체험하고, 실제 데이터셋을 활용한 실습을 통해 기초적인 분석 및 간단한 예측 모델 구현 경험을 쌓는다."},
+  {id:"ds", level:"ug", ko:"데이터과학기초및실습", en:"Foundations and Practice of Data Science", sem:["봄","가을"], offered:["2025-1","2025-2"], desc:"파이썬 프로그래밍을 통해 데이터 과학적 사고 능력을 향상시키는 것을 목표로 합니다. 기초적인 프로그래밍 개념에서부터 데이터 수집, 처리, 시각화에 이르는 데이터 과학 전반의 기술을 학습하며, 이를 통해 비전공 학생들도 자신의 전공 도메인과 데이터 과학 기술을 연계하여 새로운 가치를 창출할 수 있는 역량을 배양합니다."},
+  {id:"intro", level:"ug", ko:"인공지능입문", en:"Introduction to Artificial Intelligence", sem:["봄"], offered:["2025-1"], desc:"4차 산업혁명의 핵심 기술로 자리 잡은 인공지능(AI)을 포괄적으로 탐구하며, AI의 역사와 기본 개념을 통해 AI 기술이 어떤 배경 속에서 발전해 왔는지 이해합니다. 학생들은 AI의 초석을 이루는 머신러닝과 딥러닝 기술의 개념을 학습하여 현대 AI 기술의 구조와 작동 원리를 파악할 수 있습니다."},
+  {id:"explore", level:"ug", ko:"전공탐구생활", en:"", sem:["봄"], offered:["2025-1"], desc:""},
+  {id:"honors", level:"ug", ko:"사림아너스디딘돌", en:"", offered:["2025-1","2026-1"], desc:""},
+  {id:"hsds", level:"hs", ko:"데이터과학", en:"Data Science", offered:["2026-2"], desc:""}
+];
+
+/* cat: 논문 게재 | 학술대회 | 수상 | 연구과제 | 연구실 소식 */
+const NEWS = [
+  {date:"2026-11-01", cat:"연구과제", upcoming:true, text:"과학기술정보통신부 인공지능혁신인재양성사업 D.AX 대학원 과제가 시작됩니다. 사업 기간은 2031년 12월까지입니다.", link:"#/projects"},
+  {date:"2026-10", cat:"논문 게재", text:"비전공 학생의 생성형 AI 활용 프로그래밍 프로젝트에서 무비판적 사용, 검증 행동, 이해도 인식을 분석한 장예은 학생의 논문이 Applied Sciences(SCIE)에 게재되었습니다.", link:"#/publications?q=It Works"},
+  {date:"2026-08-11", cat:"수상", text:"명소희, 장예은 학생의 논문 ‘Performance Analysis of a State-Aware Speech Enhancement Model Using Robot Operating-State Information’이 The 15th International Conference on Smart Media & Applications에서 Best Paper Award를 받았습니다.", link:"#/publications?q=State-Aware"},
+  {date:"2026-08-11", cat:"학술대회", text:"같은 학회에서 연구실 구성원의 논문 3편을 추가로 발표했습니다. 생성형 AI 리터러시 연구 동향, 자율주행 차량용 음성 기반 연령대 분류, Blender 기반 합성 데이터 생성을 다뤘습니다.", link:"#/publications?type=conference"},
+  {date:"2026-07-01", cat:"연구과제", text:"한국연구재단 국가연구소 사업(NRL 2.0) SMR² 플랫폼 국가연구소 과제를 시작했습니다.", link:"#/projects"},
+  {date:"2026-07", cat:"연구과제", text:"국립창원대학교 앵커사업단 과제 ‘Physical AI 기반 중량물 이송 전동트롤리 원격운용 디지털트윈 플랫폼 개발’을 시작했습니다.", link:"#/projects"},
+  {date:"2026-07", cat:"논문 게재", text:"대학생의 AI 학습 동기를 역량과 흥미의 관점에서 분석한 논문이 International Journal of Systematic Innovation(Scopus)에 게재되었습니다.", link:"#/publications?q=motivates"},
+  {date:"2026-06-26", cat:"수상", text:"‘대학교육에서의 인공지능 리터러시 탐색 연구’가 한국산학기술학회 춘계학술대회 우수논문상을 받았습니다.", link:"#/publications?q=리터러시 탐색"},
+  {date:"2026-04-25", cat:"수상", text:"이채민 학생의 ‘일본어 음향 특성 최적화를 위한 Whisper 모델 Fine-tuning 방법론’이 한국스마트미디어학회 춘계학술대회 우수논문상을 받았습니다.", link:"#/publications?q=Whisper"},
+  {date:"2026-04-25", cat:"학술대회", text:"한국스마트미디어학회 춘계학술대회에서 연구실 구성원이 전력 데이터 기반 행동 분류, 가전 부하 식별, 로봇 소음 환경 음성 인식, 능동형 음성 인터페이스 연구를 발표했습니다.", link:"#/publications?q=한국스마트미디어학회"},
+  {date:"2026-01-22", cat:"학술대회", text:"지역 기반 생성형 AI 리터러시 프로그램의 대규모 적용 효과를 분석한 연구를 한국컴퓨터교육학회 동계학술대회에서 발표했습니다.", link:"#/publications?area=edu"},
+  {date:"2025-10-14", cat:"학술대회", text:"고등학생 대상 양자컴퓨팅 교육 프로그램 설계 연구를 ICTC 2025(제주)에서 발표했습니다.", link:"#/publications?q=quantum"},
+  {date:"2025-09", cat:"연구과제", text:"한국연구재단 기반구축사업(글로컬랩) DNA+ 연구소 과제를 시작했습니다.", link:"#/projects"},
+  {date:"2025-08", cat:"연구실 소식", text:"교재 『Python으로 배우는 데이터 과학 기초 및 분석』(도서출판 홍릉)을 출간했습니다.", link:"#/publications?type=book"},
+  {date:"2024-12-19", cat:"수상", text:"‘Group Activity Recognition in Indoor Spaces Using Point Clouds’가 The 13th International Conference on Smart Media & Applications에서 Best Paper Award를 받았습니다.", link:"#/publications?q=Point Clouds"}
+];
+
+
+const CONTACT = {
+  email:"junginchoi@changwon.ac.kr",
+  postal:"51140",
+  address:"경상남도 창원시 의창구 창원대학로 20",
+  addressEn:"20 Changwondaehak-ro, Uichang-gu, Changwon, Gyeongsangnam-do 51140, Republic of Korea",
+  lab:"4호관 301호",
+  office:"86호관 307호, 1호관 207호"
+};
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const fmt = d => d ? d.split("-").join(".") : "";
+const TODAY = new Date();
+const PI_NAMES = ["Jung-In Choi","최정인"];
+const LAB_NAMES = ["Sohee Myeong","명소희","Yeeun Jang","장예은","Junmin Kang","강준민","Yeon-Du Seo","서연두","Chae-Min Lee","이채민","A-Jeong Jo","조아정"];
+const TYPE_LABEL = {journal:"학술지", conference:"학술대회", book:"저서"};
+const IDX_LABEL = {SCIE:"SCIE", Scopus:"Scopus", KCI:"KCI", International:"국제", Domestic:"국내", Book:"저서"};
+
+function authorsHTML(str){
+  let h = esc(str);
+  PI_NAMES.forEach(n => { h = h.replace(new RegExp(reEsc(n),"g"), `<b>${n}</b>`); });
+  LAB_NAMES.forEach(n => { h = h.replace(new RegExp(reEsc(n),"g"), `<span class="lab">${n}</span>`); });
+  return h;
+}
+function hl(text, q){
+  const t = esc(text);
+  if(!q) return t;
+  return t.replace(new RegExp(reEsc(esc(q)),"gi"), m => `<mark>${m}</mark>`);
+}
+const linkOf = p => p.doi ? "https://doi.org/" + p.doi.replace(/\(/g,"%28").replace(/\)/g,"%29") : (p.url || "");
+const byId = id => PUBS.find(p => p.id === id);
+function sortPubs(list){
+  return [...list].sort((a,b) => (b.year - a.year) || ((b.date||"") > (a.date||"") ? 1 : (b.date||"") < (a.date||"") ? -1 : 0) || (a.type === "journal" ? -1 : 1));
+}
+function parseD(s, end){
+  const [y,m,d] = s.split("-").map(Number);
+  if(d) return new Date(y, m-1, d);
+  return end ? new Date(y, m, 0) : new Date(y, m-1, 1);
+}
+function status(p){
+  const s = parseD(p.start), e = parseD(p.end, true);
+  if(TODAY < s) return {k:"soon", t:"착수 예정"};
+  if(TODAY <= e) return {k:"on", t:"진행 중"};
+  return {k:"done", t:"종료"};
+}
+function counts(area){
+  const l = PUBS.filter(p => p.area === area);
+  return {all:l.length, j:l.filter(p=>p.type==="journal").length, c:l.filter(p=>p.type==="conference").length, b:l.filter(p=>p.type==="book").length};
+}
+
+function pubItem(p, q, opts={}){
+  const link = linkOf(p);
+  const title = hl(p.title, q);
+  const t = link ? `<a href="${esc(link)}" target="_blank" rel="noopener">${title}</a>` : title;
+  const venue = `<i>${hl(p.venue,q)}</i>${p.detail ? ", " + esc(p.detail) : ""}${p.date && p.type==="conference" ? ", " + fmt(p.date) : ""}`;
+  const idxCls = p.index === "SCIE" ? "idx scie" : "idx";
+  return `<li class="pub">
+    ${opts.year ? `<span class="y">${p.year}</span>` : ""}
+    <div>
+      <h3>${t}</h3>
+      <p class="au">${authorsHTML(p.authors)}</p>
+      <p class="vn">${venue}</p>
+    </div>
+    <div class="side-meta">
+      <span class="${idxCls}">${IDX_LABEL[p.index]}</span>
+      ${p.award ? `<span class="award">${esc(p.award)}</span>` : ""}
+      ${p.doi ? `<a href="${esc(link)}" target="_blank" rel="noopener">DOI</a>` : (link ? `<a href="${esc(link)}" target="_blank" rel="noopener">${p.type==="book" ? "도서 정보" : "원문"}</a>` : "")}
+    </div>
+  </li>`;
+}
+function yearGroups(list, q, cls=""){
+  const years = [...new Set(list.map(p => p.year))].sort((a,b)=>b-a);
+  return years.map(y => {
+    const items = list.filter(p => p.year === y);
+    return `<section class="yr-group ${cls}" aria-label="${y}년">
+      <div class="yr">${y}<small>${items.length}편</small></div>
+      <ol>${items.map(p => pubItem(p, q)).join("")}</ol>
+    </section>`;
+  }).join("");
+}
+
+function gantt(){
+  const min = new Date(2018,0,1), max = new Date(2036,0,1), span = max - min;
+  const pct = d => Math.max(0, Math.min(100, (d - min) / span * 100));
+  const rows = [...PROJECTS].sort((a,b) => parseD(b.start) - parseD(a.start));
+  const ticks = []; for(let y=2018; y<=2036; y+=2) ticks.push(y);
+  const today = pct(TODAY);
+  const ty = `${TODAY.getFullYear()}.${String(TODAY.getMonth()+1).padStart(2,"0")}`;
+  return `<div class="gantt-scroll" role="img" aria-label="연구과제 기간 타임라인, 2018년부터 2035년까지">
+    <div class="gantt">
+      <div class="g-labels">
+        ${rows.map(p => `<div><b>${esc(p.short)}</b><span>${esc(p.agency)}, ${fmt(p.start)} – ${fmt(p.end)}</span></div>`).join("")}
+        <div class="g-axis-spacer"></div>
+      </div>
+      <div class="g-plot">
+        ${rows.map(p => { const s = status(p); const a = pct(parseD(p.start)), b = pct(parseD(p.end,true));
+          return `<div class="g-row"><span class="g-bar ${s.k}" style="left:${a}%;width:${Math.max(.6,b-a)}%" title="${esc(s.t)}"></span></div>`; }).join("")}
+        <div class="g-axis">${ticks.map(y => `<span style="left:${pct(new Date(y,0,1))}%">${y}</span>`).join("")}</div>
+        <div class="g-today" style="left:${today}%"><span>${ty}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="g-legend">
+    <span><i style="background:var(--accent)"></i>진행 중</span>
+    <span><i style="box-shadow:inset 0 0 0 1px var(--ink);background-image:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 6px)"></i>착수 예정</span>
+    <span><i style="background:var(--muted)"></i>종료</span>
+  </div>`;
+}
+
+/* =========================================================
+   PAGES
+   ========================================================= */
+function pageHome(){
+  const recentJ = sortPubs(PUBS.filter(p => p.type==="journal" && (p.index==="SCIE"||p.index==="Scopus"))).slice(0,6);
+  const news = [...NEWS].filter(n => !n.upcoming).slice(0,4);
+  const ongoing = PROJECTS.filter(p => status(p).k !== "done").length;
+  return `
+  <section class="hero wrap" aria-labelledby="hero-t">
+    <h1 class="hero-title display" id="hero-t" aria-label="Human Data Intelligence">
+      <span class="ln l1" aria-hidden="true"><span class="in">HUMAN</span></span>
+      <span class="ln l2" aria-hidden="true"><span class="in">DATA</span></span>
+      <span class="ln l3" aria-hidden="true"><span class="in">INTELLIGENCE</span></span>
+    </h1>
+    <div class="hero-foot grid">
+      <p class="hero-id"><b>인간 데이터 지능 연구실</b>Department of Artificial Intelligence Engineering, GAST-AI<br>Changwon National University</p>
+      <div class="hero-lede">
+        <p>사람의 행동과 말을 데이터로 관찰하고 이해하는 AI를 연구합니다. 영상, 포인트 클라우드, 음성, 전력 데이터에서 개인과 집단의 활동을 인식하는 모델을 만들고, AI와 SW, 양자 교육이 학습자에게 어떤 변화를 만드는지 실증적으로 분석합니다.</p>
+        <p>We study models that recognise human activity and behaviour from visual, sensor, audio and energy data, and how AI and computing can be taught well.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><hr class="rule-strong"></div>
+
+  <section class="about wrap grid" aria-labelledby="about-t">
+    <h2 class="label" id="about-t">About</h2>
+    <p class="about-text">HDI Lab은 데이터 마이닝과 인공지능으로 실내외 환경에서 개인과 집단의 동작을 인식하고 분석합니다. 행동 데이터에서 출발해 새로운 서비스의 설계와 응용 가능성을 탐구하고, 같은 관점을 교육에 적용해 AI, SW, 양자 교육의 방법론과 프레임워크를 설계합니다.</p>
+    <dl class="facts">
+      <div><dt>지도교수</dt><dd>최정인 교수<br><span class="muted">Assistant Professor</span></dd></div>
+      <div><dt>소속</dt><dd>국립창원대학교<br>인공지능공학과</dd></div>
+      <div><dt>연구실</dt><dd>${esc(CONTACT.lab)}<br><a href="#/contact">찾아오는 길</a></dd></div>
+    </dl>
+  </section>
+
+  <section class="areas wrap" aria-labelledby="areas-t">
+    <div class="shead"><h2 class="h2" id="areas-t">Research areas</h2><p class="ko-sub">세 개의 연구 분야와 각 분야의 논문, 학술대회 발표 수입니다.</p><a class="more" href="#/research">연구 분야 자세히</a></div>
+    <div>
+      ${AREA_ORDER.map(k => { const a = AREAS[k], c = counts(k);
+        return `<a class="area-row" href="#/research/${k}">
+          <div class="nm"><b>${esc(a.en)}</b><span>${esc(a.ko)}</span></div>
+          <p class="ds">${esc(a.short)}</p>
+          <div class="ct"><b>${c.all}</b><span>논문 ${c.j}, 발표 ${c.c}${c.b?`, 저서 ${c.b}`:""}</span></div>
+        </a>`; }).join("")}
+    </div>
+  </section>
+
+  <section class="band-2" aria-labelledby="pub-t">
+    <div class="wrap" style="padding-block:clamp(80px,10vw,144px)">
+    <div class="shead"><h2 class="h2" id="pub-t">Recent journal articles</h2><p class="ko-sub">SCIE, Scopus 등재 학술지 논문입니다.</p><a class="more" href="#/publications">전체 ${PUBS.length}편 보기</a></div>
+    <div class="compact">${yearGroups(recentJ, "")}</div>
+    </div>
+  </section>
+
+  <section class="funded wrap" aria-labelledby="fund-t" style="padding-top:clamp(80px,10vw,144px)">
+    <div class="shead"><h2 class="h2" id="fund-t">Funded research</h2><p class="ko-sub">현재 ${ongoing}개 과제가 진행 중이거나 착수를 앞두고 있습니다.</p><a class="more" href="#/projects">연구과제 전체</a></div>
+    ${gantt()}
+  </section>
+
+  <section class="news-home wrap" aria-labelledby="news-t" style="padding-top:0">
+    <div class="shead"><h2 class="h2" id="news-t">News</h2><p class="ko-sub">논문 게재, 학술대회 발표, 수상 소식입니다.</p><a class="more" href="#/news">소식 전체</a></div>
+    <div class="ledger">
+      ${news.map(n => `<article><time datetime="${n.date}">${fmt(n.date)}</time><span class="cat">${esc(n.cat)}</span><p>${esc(n.text)}</p></article>`).join("")}
+    </div>
+  </section>
+
+  ${contactBand()}`;
+}
+
+function contactBand(){
+  return `<section class="band" aria-labelledby="ct-t">
+    <div class="contact-band wrap grid">
+      <h2 class="label" id="ct-t">연구 상담과 연구실 지원은 메일로 연락해 주세요.</h2>
+      <a class="mail" href="mailto:${CONTACT.email}">${CONTACT.email}</a>
+      <div class="cols">
+        <div><h3>연구실</h3>국립창원대학교 ${esc(CONTACT.lab)}<br>${esc(CONTACT.address)}</div>
+        <div><h3>지도교수 연구실</h3>${esc(CONTACT.office)}</div>
+        <div><h3>지원 안내</h3>AI 교육이나 동작 인식 연구에 관심이 있다면 국립창원대학교 드림캐치 시스템이나 메일로 상담을 신청해 주세요.</div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function pageResearch(){
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">Research</h1>
+    <p class="ph-ko">연구 분야</p>
+    <p class="lede">연구실의 논문과 학술대회 발표를 주제별로 다시 묶으면 세 개의 흐름이 나타납니다. 각 분야는 서로 다른 데이터를 다루지만, 사람을 관찰하고 이해하는 AI라는 질문을 공유합니다.</p>
+  </header>
+  ${AREA_ORDER.map(k => { const a = AREAS[k], c = counts(k);
+    const list = sortPubs(PUBS.filter(p => p.area === k));
+    const projs = PROJECTS.filter(p => p.areas.includes(k));
+    return `<section class="rs wrap grid" id="area-${k}" aria-labelledby="h-${k}">
+      <div class="rs-aside">
+        <h2 id="h-${k}">${esc(a.en)}</h2>
+        <p class="ko-sub">${esc(a.ko)}</p>
+        <dl><dt>학술지</dt><dd>${c.j}편</dd><dt>학술대회</dt><dd>${c.c}편</dd>${c.b?`<dt>저서</dt><dd>${c.b}권</dd>`:""}${projs.length?`<dt>연구과제</dt><dd>${projs.length}건</dd>`:""}</dl>
+      </div>
+      <div class="rs-body">
+        <p>${esc(a.desc)}</p>
+        <ul class="kw" aria-label="키워드">${a.kw.map(w => `<li>${esc(w)}</li>`).join("")}</ul>
+        ${projs.length ? `<h3><span>관련 연구과제</span><a href="#/projects">전체 과제</a></h3>
+          <ul class="rs-proj">${projs.map(p => `<li><b>${esc(p.title)}</b><span>${fmt(p.start)} – ${fmt(p.end)}</span></li>`).join("")}</ul>` : ""}
+        <h3><span>논문과 발표 ${list.length}편</span><a href="#/publications?area=${k}">Publications에서 보기</a></h3>
+        <ol>${list.map(p => pubItem(p, "", {year:true})).join("")}</ol>
+      </div>
+    </section>`; }).join("")}`;
+}
+
+/* ---------- publications ---------- */
+const PS = {q:"", type:"all", idx:"all", area:"all", year:"all"};
+function pubFilter(st, skip){
+  const q = st.q.trim().toLowerCase();
+  return PUBS.filter(p =>
+    (skip==="type" || st.type==="all" || p.type===st.type) &&
+    (skip==="idx"  || st.idx==="all"  || p.index===st.idx) &&
+    (skip==="area" || st.area==="all" || p.area===st.area) &&
+    (skip==="year" || st.year==="all" || String(p.year)===st.year) &&
+    (!q || [p.title,p.authors,p.venue,String(p.year),p.detail||"",p.award||""].join(" ").toLowerCase().includes(q))
+  );
+}
+function fgroup(name, key, opts){
+  const base = pubFilter(PS, key);
+  return `<div class="fgroup"><h2>${name}</h2><ul>${opts.map(([v,label]) => {
+    const n = v==="all" ? base.length : base.filter(p => String(key==="type"?p.type:key==="idx"?p.index:key==="area"?p.area:p.year)===v).length;
+    return `<li><button class="fbtn" data-k="${key}" data-v="${v}" aria-pressed="${PS[key]===v}" ${n===0&&PS[key]!==v?"disabled":""}><span>${esc(label)}</span><em>${n}</em></button></li>`;
+  }).join("")}</ul></div>`;
+}
+function renderFilters(){
+  const years = [...new Set(PUBS.map(p=>p.year))].sort((a,b)=>b-a);
+  document.getElementById("fgroups").innerHTML =
+    fgroup("유형","type",[["all","전체"],["journal","학술지"],["conference","학술대회"],["book","저서"]]) +
+    fgroup("등재 구분","idx",[["all","전체"],["SCIE","SCIE"],["Scopus","Scopus"],["KCI","KCI"],["International","국제 학술대회"],["Domestic","국내 학술대회"]]) +
+    fgroup("연구 분야","area",[["all","전체"],...AREA_ORDER.map(k=>[k,AREAS[k].en])]) +
+    fgroup("연도","year",[["all","전체"],...years.map(y=>[String(y),String(y)])]);
+}
+function renderResults(){
+  const list = sortPubs(pubFilter(PS));
+  const active = PS.q || PS.type!=="all" || PS.idx!=="all" || PS.area!=="all" || PS.year!=="all";
+  document.getElementById("resbar").innerHTML = `<span aria-live="polite">${active ? `${PUBS.length}편 중 <b style="color:var(--ink);font-weight:600">${list.length}편</b>` : `전체 ${PUBS.length}편`}</span>${active?`<button id="reset">조건 초기화</button>`:""}`;
+  document.getElementById("reslist").innerHTML = list.length ? yearGroups(list, PS.q.trim()) :
+    `<div class="empty"><p>조건에 맞는 논문이 없습니다.</p><p>검색어를 줄이거나 필터를 해제해 보세요.</p></div>`;
+  renderFilters();
+}
+function pagePublications(params){
+  Object.assign(PS, {q:"", type:"all", idx:"all", area:"all", year:"all"});
+  ["q","type","idx","area","year"].forEach(k => { if(params.get(k)) PS[k] = params.get(k); });
+  const j = PUBS.filter(p=>p.type==="journal").length, c = PUBS.filter(p=>p.type==="conference").length, s = PUBS.filter(p=>p.index==="SCIE").length;
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">Publications</h1>
+    <p class="ph-ko">논문 및 연구실적</p>
+    <p class="lede">학술지 논문 ${j}편(SCIE ${s}편 포함), 학술대회 발표 ${c}편, 저서 2권을 연도순으로 정리했습니다. 전체 인용 정보는 <a href="${PEOPLE.pi.scholar}" target="_blank" rel="noopener">Google Scholar</a>에서 확인할 수 있습니다.</p>
+  </header>
+  <div class="pubs-page wrap grid">
+    <aside class="filters" aria-label="논문 검색과 필터">
+      <label class="search"><span>검색</span><input id="q" type="search" placeholder="제목, 저자, 학술지" value="${esc(PS.q)}" autocomplete="off"></label>
+      <div class="fgroups" id="fgroups"></div>
+      <p class="legend"><b>굵은 이름</b>은 지도교수, <span class="lab">점선 밑줄</span>은 연구실 구성원입니다.</p>
+    </aside>
+    <div class="results">
+      <div class="resbar" id="resbar"></div>
+      <div id="reslist"></div>
+    </div>
+  </div>`;
+}
+function bindPublications(){
+  renderResults();
+  const qi = document.getElementById("q");
+  let t; qi.addEventListener("input", () => { clearTimeout(t); t = setTimeout(()=>{ PS.q = qi.value; renderResults(); }, 120); });
+  document.querySelector(".pubs-page").addEventListener("click", e => {
+    const b = e.target.closest(".fbtn"); if(b && !b.disabled){ PS[b.dataset.k] = b.dataset.v; renderResults(); return; }
+    if(e.target.id === "reset"){ Object.assign(PS,{q:"",type:"all",idx:"all",area:"all",year:"all"}); qi.value=""; renderResults(); qi.focus(); }
+  });
+}
+
+function pageProjects(){
+  const rows = [...PROJECTS].sort((a,b) => parseD(b.start) - parseD(a.start));
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">Projects</h1>
+    <p class="ph-ko">연구과제</p>
+    <p class="lede">연구실이 수행했거나 수행 중인 연구과제입니다. 기간은 협약 기준이며, 진행 상태는 오늘 날짜를 기준으로 표시합니다.</p>
+  </header>
+  <div class="proj-page wrap">
+    ${gantt()}
+    <section class="archive" aria-labelledby="arc-t">
+      <h2 class="sr" id="arc-t">연구과제 목록</h2>
+      <div class="arc-head" aria-hidden="true"><span class="c1">기간</span><span class="c2">과제명</span><span class="c3">지원 기관</span><span class="c4">상태</span></div>
+      ${rows.map((p,i) => { const s = status(p);
+        const rel = p.pubs.map(byId).filter(Boolean);
+        return `<details class="proj" ${i===0?"":""}>
+          <summary>
+            <span class="c1">${fmt(p.start)} – ${fmt(p.end)}</span>
+            <span class="c2">${esc(p.title)}</span>
+            <span class="c3">${esc(p.agency)}${p.program?`<br><span class="muted">${esc(p.program)}</span>`:""}</span>
+            <span class="c4 st-${s.k}">${s.t}</span>
+          </summary>
+          <div class="proj-body"><dl>
+            <dt>개요</dt><dd>${esc(p.summary)}</dd>
+            ${p.role?`<dt>참여</dt><dd>${esc(p.role)}</dd>`:""}
+            ${p.goal?`<dt>연구 목표</dt><dd>${esc(p.goal)}</dd>`:""}
+            ${p.areas.length?`<dt>연구 분야</dt><dd>${p.areas.map(a=>`<a href="#/research/${a}">${esc(AREAS[a].en)}</a>`).join(", ")}</dd>`:""}
+            ${rel.length?`<dt>관련 실적</dt><dd><ul class="rel">${rel.map(r=>`<li>${linkOf(r)?`<a href="${esc(linkOf(r))}" target="_blank" rel="noopener">${esc(r.title)}</a>`:esc(r.title)}<span>${r.year}, ${IDX_LABEL[r.index]}</span></li>`).join("")}</ul></dd>`:""}
+          </dl></div>
+        </details>`; }).join("")}
+    </section>
+  </div>`;
+}
+
+function memberRows(list, emptyText){
+  if(!list.length) return `<p class="none">${emptyText}</p>`;
+  return list.map(m => {
+    const work = m.key ? sortPubs(PUBS.filter(p => (p.members||[]).includes(m.key))) : [];
+    return `<article class="mem">
+      <div class="n"><b>${esc(m.ko)}</b>${m.en?`<span>${esc(m.en)}</span>`:""}</div>
+      <div class="r">${esc(m.role)}<br><span class="muted">${esc(m.dept||m.now||"")}</span></div>
+      <div class="w">
+        ${m.interests && m.interests.length ? `<h4>연구 관심 분야</h4><p>${m.interests.map(esc).join(", ")}</p>` : ""}
+        ${work.length ? `<h4 ${m.interests&&m.interests.length?'style="margin-top:12px"':""}>발표 논문</h4><ul>${work.map(p=>`<li><span>${p.year}</span>${esc(p.title)}${p.award?` <span class="award" style="color:var(--accent);margin:0">${esc(p.award)}</span>`:""}</li>`).join("")}</ul>` : ""}
+      </div>
+      <div class="c">${m.email?`<a href="mailto:${esc(m.email)}">${esc(m.email)}</a>`:""}${m.homepage?`<br><a href="${esc(m.homepage)}" target="_blank" rel="noopener">홈페이지</a>`:""}</div>
+    </article>`;
+  }).join("");
+}
+function pagePeople(){
+  const pi = PEOPLE.pi;
+  const cv = (h, rows) => `<h3>${h}</h3><ul>${rows.map(([d,t])=>`<li><span>${esc(d)}</span>${esc(t)}</li>`).join("")}</ul>`;
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">People</h1>
+    <p class="ph-ko">구성원</p>
+    <p class="lede">지도교수와 대학원생, 학부 연구생이 함께 연구합니다. 구성원별 발표 논문은 Publications 데이터에서 자동으로 연결됩니다.</p>
+  </header>
+  <div class="people-page wrap">
+    <section class="pi grid" aria-labelledby="pi-t">
+      <div class="pi-name">
+        <h2 class="sr" id="pi-t">Principal Investigator</h2>
+        <p class="ko">${esc(pi.ko)}</p>
+        <p class="en">${esc(pi.en)}</p>
+        <p class="role">Principal Investigator, ${esc(pi.title)}<br>${esc(pi.dept)}</p>
+        <p class="links"><a href="mailto:${pi.email}">${pi.email}</a><a href="${pi.scholar}" target="_blank" rel="noopener">Google Scholar</a><a href="#/teaching">담당 강의</a></p>
+      </div>
+      <div class="pi-detail">
+        <p class="interests">${pi.interests.map(esc).join(", ")}</p>
+        <div class="cv">
+          ${cv("학력", pi.education)}
+          ${cv("경력", pi.career)}
+          ${cv("대외 활동과 보직", pi.service)}
+        </div>
+      </div>
+    </section>
+
+    <section class="grp" aria-labelledby="g-t"><div class="grp-h"><h2 id="g-t">Graduate Students</h2><span>대학원생 ${PEOPLE.graduate.length}명</span></div>
+      ${memberRows(PEOPLE.graduate, "현재 등록된 대학원생이 없습니다.")}</section>
+    <section class="grp" aria-labelledby="u-t"><div class="grp-h"><h2 id="u-t">Undergraduate Researchers</h2><span>학부 연구생 ${PEOPLE.undergraduate.length}명</span></div>
+      ${memberRows(PEOPLE.undergraduate, "현재 등록된 학부 연구생이 없습니다.")}</section>
+    <section class="grp" aria-labelledby="a-t"><div class="grp-h"><h2 id="a-t">Alumni</h2><span>졸업생</span></div>
+      ${memberRows(PEOPLE.alumni, "등록된 졸업생이 아직 없습니다.")}</section>
+  </div>`;
+}
+
+function curTerm(){ const y = TODAY.getFullYear(), m = TODAY.getMonth()+1; if(m>=3 && m<=8) return `${y}-1`; return m>=9 ? `${y}-2` : `${y-1}-2`; }
+function pageTeaching(){
+  const cur = curTerm();
+  const terms = [...new Set(COURSES.flatMap(c => c.offered))].sort();
+  const latest = c => Math.max(...c.offered.map(t => Number(t.replace("-",""))));
+  const levels = [["grad","대학원","Graduate courses"],["ug","학부","Undergraduate courses"],["hs","고등학교 정규 교과","High school courses"]];
+  const byLevel = lv => COURSES.filter(c => c.level === lv).sort((a,b) => latest(b) - latest(a));
+  const rows = levels.flatMap(([lv]) => byLevel(lv));
+  const LV = {grad:"대학원", ug:"학부", hs:"고등학교"};
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">Teaching</h1>
+    <p class="ph-ko">강의</p>
+    <p class="lede">국립창원대학교에서 담당하는 대학원과 학부 강의입니다. 수강 신청은 학교 시스템에서 해 주세요. 강의 문의는 <a href="mailto:${CONTACT.email}">메일</a>로 보내 주시면 담당 교수나 조교가 답변합니다.</p>
+  </header>
+  <div class="teach-page wrap">
+    <div class="tmx-scroll">
+      <table class="tmx">
+        <caption class="sr">학기별 담당 강의</caption>
+        <thead><tr><th scope="col">강의</th>${terms.map(t => `<th scope="col">${t}</th>`).join("")}</tr></thead>
+        <tbody>${rows.map(c => `<tr><th scope="row">${esc(c.ko)}<span>${LV[c.level]}</span></th>${terms.map(t => `<td>${c.offered.includes(t) ? `<i aria-hidden="true"></i><span class="sr">${t} 담당</span>` : ""}</td>`).join("")}</tr>`).join("")}</tbody>
+      </table>
+    </div>
+    ${levels.map(([lv,ko,en]) => { const list = byLevel(lv); if(!list.length) return "";
+      return `<section class="grp" aria-labelledby="lv-${lv}"><div class="grp-h"><h2 id="lv-${lv}">${en}</h2><span>${ko} ${list.length}과목</span></div>
+        ${list.map(c => {
+          return `<article class="crs">
+            <div class="n"><b>${esc(c.ko)}</b>${c.en?`<span class="en">${esc(c.en)}</span>`:""}
+              <p class="mt">${c.offered.join(", ")} 담당</p></div>
+            <div class="d">${c.desc?`<p>${esc(c.desc)}</p>`:""}</div>
+          </article>`; }).join("")}
+      </section>`; }).join("")}
+  </div>`;
+}
+
+let NCAT = "all";
+function pageNews(){
+  NCAT = "all";
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">News</h1>
+    <p class="ph-ko">연구실 소식</p>
+    <p class="lede">논문 게재와 학술대회 발표, 수상, 연구과제 소식을 기록합니다.</p>
+  </header>
+  <div class="news-page wrap"><div class="ntabs" id="ntabs" role="group" aria-label="소식 분류"></div><div id="nlist"></div></div>`;
+}
+function renderNews(){
+  const cats = ["all","수상","논문 게재","학술대회","연구과제","연구실 소식"];
+  document.getElementById("ntabs").innerHTML = cats.map(c => { const n = c==="all"?NEWS.length:NEWS.filter(x=>x.cat===c).length;
+    return `<button class="fbtn" data-c="${c}" aria-pressed="${NCAT===c}"><span>${c==="all"?"전체":c}</span><em>${n}</em></button>`; }).join("");
+  const list = NEWS.filter(n => NCAT==="all" || n.cat===NCAT);
+  const years = [...new Set(list.map(n=>n.date.slice(0,4)))];
+  document.getElementById("nlist").innerHTML = years.map(y => `<section class="yr-group" aria-label="${y}년" style="grid-template-columns:repeat(12,minmax(0,1fr))">
+      <div class="yr">${y}</div>
+      <div style="grid-column:3/13">${list.filter(n=>n.date.startsWith(y)).map(n => `<article class="nrow" style="grid-template-columns:repeat(10,minmax(0,1fr))">
+        <time datetime="${n.date}" style="grid-column:1/3">${fmt(n.date)}</time>
+        <span class="cat" style="grid-column:3/5">${esc(n.cat)}${n.upcoming?`<span class="tag">예정</span>`:""}</span>
+        <p style="grid-column:5/11">${n.link?`<a href="${n.link}">${esc(n.text)}</a>`:esc(n.text)}</p>
+      </article>`).join("")}</div>
+    </section>`).join("");
+}
+function bindNews(){
+  renderNews();
+  document.getElementById("ntabs").addEventListener("click", e => { const b = e.target.closest(".fbtn"); if(!b) return; NCAT = b.dataset.c; renderNews(); });
+}
+
+function pageContact(){
+  const q = encodeURIComponent("국립창원대학교");
+  return `
+  <header class="phead wrap grid">
+    <h1 class="display">Contact</h1>
+    <p class="ph-ko">연락처와 찾아오는 길</p>
+    <p class="lede">연구 협력, 공동 연구, 연구실 지원에 관한 문의는 메일로 받습니다.</p>
+  </header>
+  <section class="ct-main wrap grid" aria-label="주소와 연락처">
+    <p class="addr">${esc(CONTACT.postal)} ${esc(CONTACT.address)}<br>국립창원대학교 ${esc(CONTACT.lab)}<small>${esc(CONTACT.addressEn)}</small></p>
+    <div class="ct-side">
+      <dl>
+        <dt>메일</dt><dd><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></dd>
+        <dt>연구실</dt><dd>${esc(CONTACT.lab)}</dd>
+        <dt>교수실</dt><dd>${esc(CONTACT.office)}</dd>
+        <dt>소속</dt><dd>인공지능공학과, GAST-AI</dd>
+      </dl>
+      <div class="maplinks"><h2>지도 앱에서 열기</h2><ul>
+        <li><a href="https://map.naver.com/p/search/${q}" target="_blank" rel="noopener">네이버 지도</a></li>
+        <li><a href="https://map.kakao.com/?q=${q}" target="_blank" rel="noopener">카카오맵</a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&query=Changwon+National+University" target="_blank" rel="noopener">Google Maps</a></li>
+      </ul></div>
+    </div>
+  </section>
+  <figure class="map wrap">
+    <div class="map-frame"><iframe title="국립창원대학교 위치 지도" src="https://www.google.com/maps?q=${q}&output=embed&hl=ko" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+    <figcaption>국립창원대학교 캠퍼스. 연구실은 ${esc(CONTACT.lab)}입니다.</figcaption>
+  </figure>
+  <section class="apply wrap grid" aria-labelledby="ap-t">
+    <h2 class="h2" id="ap-t">Joining the lab</h2>
+    <div class="body">
+      <p>AI 교육이나 동작 인식 연구에 관심 있는 학생을 기다립니다. 국립창원대학교 드림캐치 시스템이나 메일로 상담을 신청해 주세요.</p>
+      <p>연구실의 최근 연구 주제는 <a href="#/research">Research</a>와 <a href="#/publications">Publications</a>에서 확인할 수 있습니다.</p>
+    </div>
+  </section>`;
+}
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+const main = document.getElementById("main");
+let first = true;
+function fitHero(){
+  const t = document.querySelector(".hero-title"); if(!t) return;
+  const ref = t.querySelector(".l3 .in");
+  t.style.fontSize = "100px";
+  const w = ref.getBoundingClientRect().width;
+  const avail = t.getBoundingClientRect().width;
+  if(w > 0) t.style.fontSize = Math.floor(100 * avail / w * 0.995 * 100) / 100 + "px";
+}
+function route(){
+  const raw = decodeURIComponent(location.hash.slice(1)) || "/";
+  const [path, qs] = raw.split("?");
+  const parts = path.split("/").filter(Boolean);
+  const page = parts[0] || "home";
+  const params = new URLSearchParams(qs || "");
+  const pages = {home:pageHome, research:pageResearch, publications:()=>pagePublications(params), projects:pageProjects, people:pagePeople, teaching:pageTeaching, news:pageNews, contact:pageContact};
+  const fn = pages[page] || pageHome;
+  main.innerHTML = fn();
+  main.classList.remove("enter","animate");
+  void main.offsetWidth;
+  if(page==="home" && first) main.classList.add("animate"); else if(!first) main.classList.add("enter");
+  if(page==="publications") bindPublications();
+  if(page==="news") bindNews();
+  if(page==="home"){ fitHero(); if(document.fonts) document.fonts.ready.then(fitHero); }
+  document.querySelectorAll(".nav a").forEach(a => a.toggleAttribute("aria-current", a.dataset.p === page) || a.removeAttribute("aria-current"));
+  document.querySelectorAll(".nav a").forEach(a => { if(a.dataset.p === page) a.setAttribute("aria-current","page"); });
+  const titles = {home:"", research:"Research", publications:"Publications", projects:"Projects", people:"People", teaching:"Teaching", news:"News", contact:"Contact"};
+  document.title = (titles[page] ? titles[page] + " | " : "") + "HDI Lab, Changwon National University";
+  closeMenu();
+  if(parts[1]){ const el = document.getElementById("area-" + parts[1]); if(el){ requestAnimationFrame(()=>el.scrollIntoView()); first=false; return; } }
+  if(!first){ window.scrollTo(0,0); main.focus({preventScroll:true}); }
+  first = false;
+}
+const btn = document.querySelector(".menu-btn"), nav = document.getElementById("nav");
+function closeMenu(){ nav.classList.remove("open"); btn.setAttribute("aria-expanded","false"); btn.textContent = "메뉴"; document.body.style.overflow = ""; }
+btn.addEventListener("click", () => { const o = !nav.classList.contains("open"); nav.classList.toggle("open", o); btn.setAttribute("aria-expanded", String(o)); btn.textContent = o ? "닫기" : "메뉴"; document.body.style.overflow = o ? "hidden" : ""; });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && nav.classList.contains("open")){ closeMenu(); btn.focus(); } });
+let rt; window.addEventListener("resize", () => { cancelAnimationFrame(rt); rt = requestAnimationFrame(fitHero); });
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
