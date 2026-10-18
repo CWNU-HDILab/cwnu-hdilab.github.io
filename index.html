@@ -994,7 +994,7 @@ function memberRows(list, emptyText){
       <div class="r">${esc(m.role)}<br><span class="muted">${esc(m.dept||m.now||"")}</span></div>
       <div class="w">
         ${m.interests && m.interests.length ? `<h4>연구 관심 분야</h4><p>${m.interests.map(esc).join(", ")}</p>` : ""}
-        ${work.length ? `<h4 ${m.interests&&m.interests.length?'style="margin-top:12px"':""}>발표 논문</h4><ul>${work.map(p=>`<li><span>${p.year}</span>${esc(p.title)}${p.index==="SCIE"?` <span style="color:var(--accent);font-weight:650;font-size:12.5px;margin:0 0 0 6px">SCIE</span>`:""}${p.award?` <span class="award" style="color:var(--accent);margin:0">${esc(p.award)}</span>`:""}</li>`).join("")}</ul>` : ""}
+        ${work.length ? `<h4 ${m.interests&&m.interests.length?'style="margin-top:12px"':""}>발표 논문</h4><ul>${work.map(p=>`<li><span>${p.year}</span>${p.type==="journal"?`<span style="color:${p.index==="SCIE"?"var(--accent)":"var(--ink)"};font-weight:650;font-size:12.5px">${p.index}</span>`:""}${p.award?`<span style="color:var(--accent);font-weight:600;font-size:12.5px">${esc(p.award)}</span>`:""}${esc(p.title)}</li>`).join("")}</ul>` : ""}
       </div>
       <div class="c">${m.email?`<a href="mailto:${esc(m.email)}">${esc(m.email)}</a>`:""}${m.homepage?`<br><a href="${esc(m.homepage)}" target="_blank" rel="noopener">홈페이지</a>`:""}</div>
     </article>`;
