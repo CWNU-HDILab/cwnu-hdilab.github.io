@@ -399,6 +399,19 @@ details.proj summary:hover .c2{color:var(--accent)}
 .map figcaption{margin-top:12px;font-size:13.5px;color:var(--muted)}
 @media (max-width:860px){.map-frame{aspect-ratio:4/3}}
 
+/* ---------- photos ---------- */
+.ph{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--paper-2)}
+.pi-name .ph{width:min(280px,100%);margin-bottom:32px}
+.mem .n .ph{width:96px;margin-bottom:14px}
+.nimg{margin:16px 0 0;max-width:520px}
+.nimg img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--paper-2)}
+.nimg figcaption{margin-top:8px;font-size:13px;line-height:1.5;color:var(--muted)}
+.ledger .nimg{margin-top:16px}
+.nrow .nimg+*{margin-top:0}
+.ngal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px;max-width:720px}
+.ngal .nimg{margin:0;max-width:none}
+.ngal.odd .nimg:first-child{grid-column:1/-1}
+
 /* ---------- footer ---------- */
 .ftr{border-top:1px solid var(--rule);padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));font-size:13.5px;color:var(--muted)}
 .ftr .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px}
@@ -576,6 +589,7 @@ const PROJECTS = [
 ];
 
 /* 구성원: 이름, 소속, 관심 분야, 이메일, 개인 홈페이지(homepage)를 입력합니다.
+   사진: images 폴더에 올린 뒤 photo:"images/people/jang.jpg"처럼 경로를 적습니다. (세로 4:5 비율 권장, 비워 두면 사진 없이 표시)
    alumni 예시: {ko:"홍길동", en:"Gil-Dong Hong", role:"M.S., 2027", now:"현재 소속", email:"", homepage:""} */
 const PEOPLE = {
   pi: {
@@ -587,10 +601,10 @@ const PEOPLE = {
     interests:["Activity Recognition","Abnormal Situation Detection","AI Education","Quantum Computer Education"],
     education:[["2017","Ph.D. in Computer Science, Ewha Womans University"],["2012","M.S. in Computer Science, Ewha Womans University"]],
     career:[["2023.03 – 2024.10","서울대학교 기초교육원 강의조교수"],["2020.09 – 2022.08","아주대학교 인공지능융합학과 특임교수"],["2018.07 – 2020.08","부산대학교 SW교육센터 강의전담 및 초빙교수"]],
-    service:[["2025.06 –","국립창원대학교 입학취업처 부처장"],["2025.01 –","국립창원대학교 AI융합기초영역 책임교수"], ["2024.08 – 2027.07","한국발명진흥회 지식재산 가치평가 품질관리 사업 외부전문가"]]
+    service:[["2025.06 –","국립창원대학교 입학취업처 부처장"],["2025.01 –","국립창원대학교 AI융합기초영역 책임교수"],["2024.08 – 2027.07","한국발명진흥회 지식재산 가치평가 품질관리 사업 외부전문가"]]
   },
   graduate: [
-    {key:"jang", ko:"장예은", en:"Yeeun Jang", role:"Master’s student", dept:"Dept. of Artificial Intelligence Engineering", interests:["Physical AI","Digital Twin","OpenUSD"], email:"20267317@gs.cwnu.ac.kr", homepage:"",photo:"images/jang.jpg"}
+    {key:"jang", ko:"장예은", en:"Yeeun Jang", role:"Master’s student", dept:"Dept. of Artificial Intelligence Engineering", interests:["Physical AI","Digital Twin","OpenUSD"], email:"20267317@gs.cwnu.ac.kr", homepage:"", photo:"images/jang.jpg"}
   ],
   undergraduate: [
     {key:"kang", ko:"강준민", en:"Junmin Kang", role:"Research Intern", dept:"Dept. of AI Electrical Engineering", interests:[], email:"03junmin@naver.com", homepage:"", photo:"images/kang.jpg"},
@@ -617,12 +631,15 @@ const COURSES = [
   {id:"hsds", level:"hs", ko:"데이터과학", en:"Data Science", offered:["2026-2"], desc:""}
 ];
 
-/* cat: 논문 게재 | 학술대회 | 수상 | 연구과제 | 연구실 소식 */
+/* cat: 논문 게재 | 학술대회 | 수상 | 연구과제 | 연구실 소식
+   사진(선택): image:"images/news/2026-icsma.jpg", alt:"사진 설명", caption:"사진 아래에 표시할 문구" (가로 3:2 비율 권장)
+   여러 장: images:[{src:"images/news/a.jpg", alt:"...", caption:"..."}, {src:"images/news/b.jpg", alt:"..."}]
+   홈 화면에는 첫 번째 사진만, News 페이지에는 전부 표시됩니다. */
 const NEWS = [
   {date:"2026-11-01", cat:"연구과제", upcoming:true, text:"과학기술정보통신부 인공지능혁신인재양성사업 D.AX 대학원 과제가 시작됩니다. 사업 기간은 2031년 12월까지입니다.", link:"#/projects"},
   {date:"2026-10", cat:"논문 게재", text:"비전공 학생의 생성형 AI 활용 프로그래밍 프로젝트에서 무비판적 사용, 검증 행동, 이해도 인식을 분석한 장예은 학생의 논문이 Applied Sciences(SCIE)에 게재되었습니다.", link:"#/publications?q=It Works"},
-  {date:"2026-08-11", cat:"수상", text:"명소희, 장예은 학생의 논문 ‘Performance Analysis of a State-Aware Speech Enhancement Model Using Robot Operating-State Information’이 The 15th International Conference on Smart Media & Applications에서 Best Paper Award를 받았습니다.", link:"#/publications?q=State-Aware", , image:"images/sma_best"},
-  {date:"2026-08-11", cat:"학술대회", text:"The 15th International Conference on Smart Media & Applications 학회에서 연구실 구성원의 논문 4편을 발표했습니다.", link:"#/publications?type=conference", images:[{src:"images/sma_1.jpg", alt:"단체사진1"},{src:"images/sma_2.jpg", alt:"단체사진"},]}},
+  {date:"2026-08-11", cat:"수상", text:"명소희, 장예은 학생의 논문 ‘Performance Analysis of a State-Aware Speech Enhancement Model Using Robot Operating-State Information’이 The 15th International Conference on Smart Media & Applications에서 Best Paper Award를 받았습니다.", link:"#/publications?q=State-Aware", image:"images/sma_best.jpg", alt:"Best Paper Award 시상 사진"},
+  {date:"2026-08-11", cat:"학술대회", text:"The 15th International Conference on Smart Media & Applications 학회에서 연구실 구성원의 논문 4편을 발표했습니다.", link:"#/publications?type=conference", images:[{src:"images/sma_1.jpg", alt:"단체사진1"},{src:"images/sma_2.jpg", alt:"단체사진"}]},
   {date:"2026-07-01", cat:"연구과제", text:"한국연구재단 국가연구소 사업(NRL 2.0) SMR² 플랫폼 국가연구소 과제를 시작했습니다.", link:"#/projects"},
   {date:"2026-07", cat:"연구과제", text:"국립창원대학교 앵커사업단 과제 ‘Physical AI 기반 중량물 이송 전동트롤리 원격운용 디지털트윈 플랫폼 개발’을 시작했습니다.", link:"#/projects"},
   {date:"2026-07", cat:"논문 게재", text:"대학생의 AI 학습 동기를 역량과 흥미의 관점에서 분석한 논문이 International Journal of Systematic Innovation(Scopus)에 게재되었습니다.", link:"#/publications?q=motivates"},
@@ -670,6 +687,14 @@ function hl(text, q){
   return t.replace(new RegExp(reEsc(esc(q)),"gi"), m => `<mark>${m}</mark>`);
 }
 const linkOf = p => p.doi ? "https://doi.org/" + p.doi.replace(/\(/g,"%28").replace(/\)/g,"%29") : (p.url || "");
+function newsImg(n, max){
+  const list = (n.images && n.images.length ? n.images : (n.image ? [{src:n.image, alt:n.alt, caption:n.caption}] : [])).slice(0, max || 99);
+  if(!list.length) return "";
+  const fig = im => `<figure class="nimg"><img src="${esc(im.src)}" alt="${esc(im.alt||"")}" loading="lazy" onerror="this.parentNode.style.display='none'">${im.caption?`<figcaption>${esc(im.caption)}</figcaption>`:""}</figure>`;
+  if(list.length === 1) return fig(list[0]);
+  return `<div class="ngal${list.length % 2 ? " odd" : ""}">${list.map(fig).join("")}</div>`;
+}
+const photoOf = (src, alt) => src ? `<img class="ph" src="${esc(src)}" alt="${esc(alt)}" loading="lazy" onerror="this.remove()">` : "";
 const byId = id => PUBS.find(p => p.id === id);
 function sortPubs(list){
   return [...list].sort((a,b) => (b.year - a.year) || ((b.date||"") > (a.date||"") ? 1 : (b.date||"") < (a.date||"") ? -1 : 0) || (a.type === "journal" ? -1 : 1));
@@ -811,7 +836,7 @@ function pageHome(){
   <section class="news-home wrap" aria-labelledby="news-t" style="padding-top:0">
     <div class="shead"><h2 class="h2" id="news-t">News</h2><p class="ko-sub">논문 게재, 학술대회 발표, 수상 소식입니다.</p><a class="more" href="#/news">소식 전체</a></div>
     <div class="ledger">
-      ${news.map(n => `<article><time datetime="${n.date}">${fmt(n.date)}</time><span class="cat">${esc(n.cat)}</span><p>${esc(n.text)}</p></article>`).join("")}
+      ${news.map(n => `<article><time datetime="${n.date}">${fmt(n.date)}</time><span class="cat">${esc(n.cat)}</span><p>${esc(n.text)}</p>${newsImg(n, 1)}</article>`).join("")}
     </div>
   </section>
 
@@ -965,7 +990,7 @@ function memberRows(list, emptyText){
   return list.map(m => {
     const work = m.key ? sortPubs(PUBS.filter(p => (p.members||[]).includes(m.key))) : [];
     return `<article class="mem">
-      <div class="n"><b>${esc(m.ko)}</b>${m.en?`<span>${esc(m.en)}</span>`:""}</div>
+      <div class="n">${photoOf(m.photo, m.ko + " 사진")}<b>${esc(m.ko)}</b>${m.en?`<span>${esc(m.en)}</span>`:""}</div>
       <div class="r">${esc(m.role)}<br><span class="muted">${esc(m.dept||m.now||"")}</span></div>
       <div class="w">
         ${m.interests && m.interests.length ? `<h4>연구 관심 분야</h4><p>${m.interests.map(esc).join(", ")}</p>` : ""}
@@ -988,6 +1013,7 @@ function pagePeople(){
     <section class="pi grid" aria-labelledby="pi-t">
       <div class="pi-name">
         <h2 class="sr" id="pi-t">Principal Investigator</h2>
+        ${photoOf(pi.photo, pi.ko + " 교수 사진")}
         <p class="ko">${esc(pi.ko)}</p>
         <p class="en">${esc(pi.en)}</p>
         <p class="role">Principal Investigator, ${esc(pi.title)}<br>${esc(pi.dept)}</p>
@@ -1069,7 +1095,7 @@ function renderNews(){
       <div style="grid-column:3/13">${list.filter(n=>n.date.startsWith(y)).map(n => `<article class="nrow" style="grid-template-columns:repeat(10,minmax(0,1fr))">
         <time datetime="${n.date}" style="grid-column:1/3">${fmt(n.date)}</time>
         <span class="cat" style="grid-column:3/5">${esc(n.cat)}${n.upcoming?`<span class="tag">예정</span>`:""}</span>
-        <p style="grid-column:5/11">${n.link?`<a href="${n.link}">${esc(n.text)}</a>`:esc(n.text)}</p>
+        <div style="grid-column:5/11"><p>${n.link?`<a href="${n.link}">${esc(n.text)}</a>`:esc(n.text)}</p>${newsImg(n)}</div>
       </article>`).join("")}</div>
     </section>`).join("");
 }
