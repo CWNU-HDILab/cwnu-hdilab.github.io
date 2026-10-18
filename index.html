@@ -401,7 +401,7 @@ details.proj summary:hover .c2{color:var(--accent)}
 
 /* ---------- photos ---------- */
 .ph{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--paper-2)}
-.pi-name .ph{width:min(280px,100%);margin-bottom:32px}
+.pi-name .ph{width:min(180px,100%);margin-bottom:24px}
 .mem .n .ph{width:96px;margin-bottom:14px}
 .nimg{margin:16px 0 0;max-width:520px}
 .nimg img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--paper-2)}
@@ -994,7 +994,7 @@ function memberRows(list, emptyText){
       <div class="r">${esc(m.role)}<br><span class="muted">${esc(m.dept||m.now||"")}</span></div>
       <div class="w">
         ${m.interests && m.interests.length ? `<h4>연구 관심 분야</h4><p>${m.interests.map(esc).join(", ")}</p>` : ""}
-        ${work.length ? `<h4 ${m.interests&&m.interests.length?'style="margin-top:12px"':""}>발표 논문</h4><ul>${work.map(p=>`<li><span>${p.year}</span>${esc(p.title)}${p.award?` <span class="award" style="color:var(--accent);margin:0">${esc(p.award)}</span>`:""}</li>`).join("")}</ul>` : ""}
+        ${work.length ? `<h4 ${m.interests&&m.interests.length?'style="margin-top:12px"':""}>발표 논문</h4><ul>${work.map(p=>`<li><span>${p.year}</span>${esc(p.title)}${p.index==="SCIE"?` <span style="color:var(--accent);font-weight:650;font-size:12.5px;margin:0 0 0 6px">SCIE</span>`:""}${p.award?` <span class="award" style="color:var(--accent);margin:0">${esc(p.award)}</span>`:""}</li>`).join("")}</ul>` : ""}
       </div>
       <div class="c">${m.email?`<a href="mailto:${esc(m.email)}">${esc(m.email)}</a>`:""}${m.homepage?`<br><a href="${esc(m.homepage)}" target="_blank" rel="noopener">홈페이지</a>`:""}</div>
     </article>`;
