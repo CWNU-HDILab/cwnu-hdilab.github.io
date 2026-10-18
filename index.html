@@ -313,8 +313,8 @@ details.proj summary:hover .c2{color:var(--accent)}
 .people-page{padding-bottom:clamp(80px,10vw,144px)}
 .pi{padding-bottom:clamp(64px,8vw,112px);row-gap:40px}
 .pi-name{grid-column:1/6}
-.pi-name .ko{font-size:clamp(56px,7vw,104px);font-weight:700;letter-spacing:-.04em;line-height:1;font-family:"Pretendard Variable","Pretendard","IBM Plex Sans KR",var(--f)}
-.pi-name .en{margin-top:14px;font-size:clamp(24px,2.4vw,34px);font-weight:560;font-stretch:82%;letter-spacing:-.01em;line-height:1.1}
+.pi-name .ko{font-size:clamp(24px, 2.4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.2;font-family:"Pretendard Variable","Pretendard","IBM Plex Sans KR",var(--f)}
+.pi-name .en{margin-top:4px;font-size:clamp(18px,1.6vw,22px);color:var(--ink-2);font-weight:500;font-stretch:82%;letter-spacing:-.01em;line-height:1.1}
 .pi-name .role{margin-top:20px;font-size:15px;color:var(--ink-2);line-height:1.6}
 .pi-name .links{margin-top:24px;display:flex;flex-direction:column;gap:4px;font-size:15px}
 .pi-detail{grid-column:7/13}
@@ -1007,7 +1007,6 @@ function pagePeople(){
   <header class="phead wrap grid">
     <h1 class="display">People</h1>
     <p class="ph-ko">구성원</p>
-    <p class="lede">지도교수와 대학원생, 학부 연구생이 함께 연구합니다. 구성원별 발표 논문은 Publications 데이터에서 자동으로 연결됩니다.</p>
   </header>
   <div class="people-page wrap">
     <section class="pi grid" aria-labelledby="pi-t">
@@ -1016,7 +1015,7 @@ function pagePeople(){
         ${photoOf(pi.photo, pi.ko + " 교수 사진")}
         <p class="ko">${esc(pi.ko)}</p>
         <p class="en">${esc(pi.en)}</p>
-        <p class="role">Principal Investigator, ${esc(pi.title)}<br>${esc(pi.dept)}</p>
+        <p class="role">${esc(pi.title)}<br>${esc(pi.dept)}</p>
         <p class="links"><a href="mailto:${pi.email}">${pi.email}</a><a href="${pi.scholar}" target="_blank" rel="noopener">Google Scholar</a><a href="#/teaching">담당 강의</a></p>
       </div>
       <div class="pi-detail">
