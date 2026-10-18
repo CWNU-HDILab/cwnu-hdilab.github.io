@@ -314,7 +314,7 @@ details.proj summary:hover .c2{color:var(--accent)}
 .pi{padding-bottom:clamp(64px,8vw,112px);row-gap:40px}
 .pi-name{grid-column:1/6}
 .pi-name .ko{font-size:clamp(24px, 2.4vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1.2;font-family:"Pretendard Variable","Pretendard","IBM Plex Sans KR",var(--f)}
-.pi-name .en{margin-top:4px;font-size:clamp(18px,1.6vw,22px);color:var(--ink-2);font-weight:500;font-stretch:82%;letter-spacing:-.01em;line-height:1.1}
+.pi-name .en{margin-left:12px;font-family:var(--f);font-size:clamp(17px,1.5vw,20px);font-weight:500;font-stretch:90%;letter-spacing:0;color:var(--ink-2);white-space:nowrap}
 .pi-name .role{margin-top:20px;font-size:15px;color:var(--ink-2);line-height:1.6}
 .pi-name .links{margin-top:24px;display:flex;flex-direction:column;gap:4px;font-size:15px}
 .pi-detail{grid-column:7/13}
@@ -401,7 +401,7 @@ details.proj summary:hover .c2{color:var(--accent)}
 
 /* ---------- photos ---------- */
 .ph{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--paper-2)}
-.pi-name .ph{width:min(180px,100%);margin-bottom:24px}
+.pi-name .ph{width:min(130px,100%);margin-bottom:20px}
 .mem .n .ph{width:96px;margin-bottom:14px}
 .nimg{margin:16px 0 0;max-width:520px}
 .nimg img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--paper-2)}
@@ -1013,8 +1013,7 @@ function pagePeople(){
       <div class="pi-name">
         <h2 class="sr" id="pi-t">Principal Investigator</h2>
         ${photoOf(pi.photo, pi.ko + " 교수 사진")}
-        <p class="ko">${esc(pi.ko)}</p>
-        <p class="en">${esc(pi.en)}</p>
+        <p class="ko">${esc(pi.ko)}<span class="en">${esc(pi.en)}</span></p>
         <p class="role">${esc(pi.title)}<br>${esc(pi.dept)}</p>
         <p class="links"><a href="mailto:${pi.email}">${pi.email}</a><a href="${pi.scholar}" target="_blank" rel="noopener">Google Scholar</a><a href="#/teaching">담당 강의</a></p>
       </div>
